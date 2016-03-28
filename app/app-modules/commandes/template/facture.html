@@ -1,0 +1,189 @@
+﻿<style>
+    @media print{
+
+        @page {}
+
+        .app-facture{
+            page-break-after:always;
+            position : relative;
+            height : 800px;
+            width : 100%;
+            background : blue;
+        }
+        .app-facture:last-of-type {
+            page-break-after: avoid !important;
+        }
+
+        .app-facture-header, .app-facture-main, .app-facture-foot{
+           
+        }
+
+        .app-facture-header{
+            display : flex;
+            flex-flow : column nowrap;
+            background : #eee;
+            height : 20%;
+        }
+
+        .app-facture-header .fac-info{
+            display : flex;
+            flex-flow : row nowrap;
+            background : #eee;
+        }
+
+        .app-facture-header .fac-date{
+            order : 1;
+            flex-grow : 1;
+            background : #eee;
+        }
+
+        .app-facture-header .fac-ref{
+            order : 1;
+            flex-grow : 2;
+            background : #eee;
+        }
+
+        .app-facture-main{
+            display : flex;
+            flex-flow : column nowrap;
+            height : 75%;
+            background : #eee;
+        }
+    
+        .app-facture-foot{
+            height : 20%;
+            background : #eee;
+        }
+
+        .analyse-list .list-row{
+            display : flex;
+            flex-flow : row nowrap;
+        }
+
+        .analyse-list .list-row .prestation{
+            order : 1;
+            flex-grow : 3;
+            width : 300px;
+            overflow : hidden;
+            text-overflow : ellipsis;
+        }
+
+        .analyse-list .list-row .forfait{
+            order : 2;
+            flex-grow : 1;
+        }
+
+        .analyse-list .list-row .remise{
+            order : 3;
+            flex-grow : 1;
+        }
+
+        .analyse-list .list-row .montant{
+            order : 4;
+            flex-grow : 1;
+        }
+
+        .analyse-list .list-row .nbre-b{
+            order : 5;
+            flex-grow : 1;
+        }
+
+        .analyse-list .list-row .date-retrait{
+            order : 6;
+            flex-grow : 1;
+            width : 150px;
+            overflow : hidden;
+            text-overflow : ellipsis;
+            text-align : right;
+        }
+
+        .app-facture-foot .f-foot{
+            display : flex;
+            flex-flow : row nowrap;
+        }
+
+        .app-facture-foot .f-foot .total{
+            order : 1;
+            flex-grow : 1;
+        }
+
+        .app-facture-foot .f-foot .h-retait{
+            order : 2;
+            flex-grow : 1;
+        }
+
+        .app-facture-foot .s-foot{
+            display : flex;
+            flex-flow : row nowrap;
+        }
+
+        .app-facture-foot .s-foot .mode-paiement{
+            order : 1;
+            flex-grow : 1;
+        }
+
+        .app-facture-foot .s-foot .facturiere{
+            order : 2;
+            flex-grow : 1;
+        }
+
+        .app-facture-foot .s-foot .regisseur{
+            order : 3;
+            flex-grow : 1;
+        }
+
+        .analyse-info-head{
+            display : flex;
+            flex-flow : row nowrap;
+        }
+
+        .analyse-info-head h3{
+            width : 50%;
+        }
+
+    }
+</style>
+<div class="app-facture" ng-repeat="p in facture_list">
+    <div class="app-facture-header">
+        <div class="fac-num">{{p.numeroFacture}}</div>
+        <div class="fac-info">
+            <div class="fac-date">{{p.insertDate | amDateFormat:'Do MMMM YYYY'}}</div>
+            <div class="fac-ref">BI 16 0929</div>
+        </div>
+    </div>
+    <div class="app-facture-main">
+        <div class="patient-info">
+            <h1>{{patient.fullname}}</h1>
+            <h3>{{patient.id}}</h3>
+            <p>{{patient.fullBirthDate | amDateFormat:'Do MMMM YYYY'}}</p>
+            <p>{{patient.fullBirthDate | amDifference : null : 'years'}} an(s)</p>
+        </div>
+        <div class="analyse-info">
+            <div class="analyse-info-head">
+                <h3>Service Medecin {{p.laboratoireLib}}</h3>
+                <h3>Medecin</h3>
+            </div>
+            <div class="analyse-list">
+                <div class="list-row" ng-repeat="a in p.analyse_list">
+                    <div class="prestation">{{a.analyseLib}}</div>
+                    <div class="forfait">{{a.forfait}}</div>
+                    <div class="remise">{{a.tauxReduction}}</div>
+                    <div class="montant">{{a.netApayer}}</div>
+                    <div class="nbre-b">{{a.nbreB}}</div>
+                    <div class="date-retrait">{{a.dateRetrait | amDateFormat:'Do MMMM YYYY'}}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="app-facture-foot">
+        <div class="f-foot">
+            <div class="total">Total a payer {{p.netAPayer}}</div>
+            <div class="h-retait">14 h</div>
+        </div>
+        <div class="s-foot">
+            <div class="mode-paiement">{{p.modeDePaiementLib}}</div>
+            <div class="facturiere">{{ownerNom}}</div>
+            <div class="regisseur">{{submitterNom}}</div>
+        </div>
+    </div>
+</div>

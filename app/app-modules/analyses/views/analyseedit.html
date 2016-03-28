@@ -1,0 +1,130 @@
+﻿<div class="app-patient">
+
+    <div class="app-patient-bar">
+        <div class="app-patient-bar-title">
+            <h1>{{vm.title}} d'une analyse</h1>
+        </div>
+        <div class="app-page-action">
+            <ul>
+                <li>
+                    <a href="#/analyse" title="Retour à la liste">
+                        <div class="icons-icon mdl2-arrow-HTML-legacy"></div>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    
+    <div class="app-panel">
+        <div class="app-panel-main">
+            <form name="analyseForm" novalidate>
+                <div class="aq">
+                    <p>Les champs avec (*) sont requis</p>
+                </div>
+                <div class="aq">
+                    <label>Choix du departement :</label>
+                    <select name="departementId"
+                            ng-model="vm.departementId"
+                            ng-options="dept.id as dept.departementLib for dept in vm.departements"
+                            ng-change="vm.onDeptChange()"
+                            required ng-focus>
+                        <option value="">Departement</option>
+                    </select>
+                    <div class="errorMessage" ng-show="analyseForm.departementId.$invalid && analyseForm.departementId.$focused">
+                        <small class="error" ng-show="analyseForm.departementId.$error.required">
+                            Ce champs est requis !
+                        </small>
+                    </div>
+                </div>
+                <div class="aq">
+                    <label>Choix de l'unité :</label>
+                    <select name="uniteId"
+                            ng-model="vm.uniteId"
+                            ng-options="u.id as u.uniteLib for u in vm.uniteList"
+                            ng-change="vm.onUniteChange()"
+                            required ng-focus>
+                        <option value="">Unité</option>
+                    </select>
+                    <div class="errorMessage" ng-show="analyseForm.uniteId.$invalid && analyseForm.uniteId.$focused">
+                        <small class="error" ng-show="analyseForm.uniteId.$error.required">
+                            Ce champs est requis !
+                        </small>
+                    </div>
+                </div>
+                <div class="aq">
+                    <label>Choix du laboratoire :</label>
+                    <select name="laboratoireId"
+                            ng-model="vm.analyse.laboratoireId"
+                            ng-options="lab.id as lab.laboratoireLib for lab in vm.laboratoireList"
+                            required ng-focus>
+                        <option value="">Laboratoire</option>
+                    </select>
+                    <div class="errorMessage" ng-show="analyseForm.laboratoireId.$invalid && analyseForm.laboratoireId.$focused">
+                        <small class="error" ng-show="analyseForm.laboratoireId.$error.required">
+                            Ce champs est requis !
+                        </small>
+                    </div>
+                </div>
+
+                <div class="aq">
+                    <label>Choix de l'échantillon :</label>
+                    <select name="echantillonId"
+                            ng-model="vm.analyse.echantillonId"
+                            ng-options="e.id as e.echantillonLib for e in vm.echantillons"
+                            required ng-focus>
+                        <option value="">Echantillon</option>
+                    </select>
+                    <div class="errorMessage" ng-show="analyseForm.echantillonId.$invalid && analyseForm.echantillonId.$focused">
+                        <small class="error" ng-show="analyseForm.echantillonId.$error.required">
+                            Ce champs est requis !
+                        </small>
+                    </div>
+                </div>
+
+                <div class="aq">
+                    <label>Nom de l'analyse: </label>
+                    <input type="text" name="name" ng-model="vm.analyse.analyseLib" ng-minlength="3" required ng-focus/>
+                    <div class="errorMessage" ng-show="analyseForm.name.$invalid && analyseForm.name.$focused">
+                        <small class="error" ng-show="analyseForm.name.$error.required">
+                            Ce champs est requis !
+                        </small>
+                        <small class="error" ng-show="analyseForm.name.$error.minlength">
+                            Minimum 3 caractères !
+                        </small>
+                    </div>
+                </div>
+                <div class="aq">
+                    <label>Nombre de B: </label>
+                    <input type="text" name="nbreB" ng-model="vm.analyse.nbreB" required ng-focus/>
+                    <div class="errorMessage" ng-show="analyseForm.nbreB.$invalid && analyseForm.nbreB.$focused">
+                        <small class="error" ng-show="analyseForm.nbreB.$error.required">
+                            Ce champs est requis !
+                        </small>
+                    </div>
+                </div>
+                <div class="aq">
+                    <label>Nombre de Jour de retrait: </label>
+                    <input type="text" name="nbreJourRetrait" ng-model="vm.analyse.nbreJourRetrait" required ng-focus />
+                    <div class="errorMessage" ng-show="analyseForm.nbreJourRetrait.$invalid && analyseForm.nbreJourRetrait.$focused">
+                        <small class="error" ng-show="analyseForm.nbreJourRetrait.$error.required">
+                            Ce champs est requis !
+                        </small>
+                    </div>
+                </div>
+                <div class="aq">
+                    <button type="submit" ng-click="vm.saveAnalyse()"
+                            ng-disabled="analyseForm.$invalid">
+                        {{vm.buttonText}}
+                    </button>
+                </div>
+                <div class="message" ng-show="vm.updateStatus">
+                    <div class="label label-success">
+                        <span class="glyphicon glyphicon-thumbs-up icon-white"></span>
+                        <span>{{ vm.message }}</span>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="app-panel-foot"></div>
+    </div>
+</div>

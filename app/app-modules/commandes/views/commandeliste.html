@@ -1,0 +1,180 @@
+﻿<div class="app-patient">
+    <div class="app-patient-bar">
+        <div class="app-patient-bar-title">
+            <h1>Commandes</h1>
+        </div>
+        <div class="app-page-action" sticky-nav>
+            <ul>
+                <li>
+                    <a href="#">
+                        <div class="icons-icon mdl2-refresh"></div>
+                    </a>
+                </li>
+                <li ng-click="vm.toggleSeachForm()">
+                    <div class="icons-icon mdl2-find-legacy"></div>
+                </li>
+                <li ng-show="vm.selectedIndex > 0">
+                    <a href="#/commande/{{vm.selectedIndex}}">
+                        <div class="icons-icon mdl2-view"></div>
+                    </a>
+                </li>
+                <li ng-click="vm.valideCommande(vm.selectedIndex)" 
+                ng-show="vm.selectedIndex > 0 && vm.isWaiting == true">
+                    <div class="icons-icon mdl2-accept"></div>
+                </li>
+            </ul>
+        </div>
+        <div class="app-page-action-paging">
+            <span>de {{vm.of}} à {{vm.to}} / {{vm.TotalCount}}</span>
+            <ul>
+                <li class="icons-item">
+                    <button ng-click="vm.navigateTo('prev')" ng-disabled="vm.of == 1">
+                        <div class="icons-icon mdl2-arrow-HTML-legacy"></div>
+                    </button>
+                </li>
+                <li class="icons-item">
+                    <button ng-click="vm.navigateTo('next')" ng-disabled="vm.to >= vm.TotalCount || vm.TotalCount == 0">
+                        <div class="icons-icon mdl2-arrow-HTML-mirrored-legacy"></div>
+                    </button>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <!-- <div class="app-patient-bar">
+        <div class="app-patient-bar-title">
+            <h1>Liste des commandes</h1>
+        </div>
+        <div class="app-patient-bar-action">
+            <form name="searchForm" novalidate>
+                <select 
+                        ng-model="vm.cmd_range"
+                        ng-change="vm.cmdChange()">
+                    <option value="1">Aujourd'hui</option>
+                    <option value="0">Autres</option>
+                </select>
+                <input class="searchBox" type="text"
+                       ng-model="vm.searchText"
+                       ng-change="vm.searchTextChanged()"
+                       placeholder="Rechercher" />
+                <button ng-click="vm.lookUp()">
+                    <span class="icon ion-android-search"></span>
+                </button>
+            </form>
+        </div>
+    </div> -->
+    <!-- <div class="app-page-action" sticky-nav>
+        <div class="app-page-action-button">
+            <a href="#/commande/{{vm.selectedIndex}}" ng-show="vm.selectedIndex > 0">
+                <span class="icon ion-edit"></span>
+                <span class="text">Détails</span>
+            </a>
+            <a href="#"
+               ng-click="vm.valideCommande(vm.selectedIndex)"
+               ng-show="vm.selectedIndex > 0 && vm.isWaiting == true">
+                <span class="icon ion-document"></span>
+                <span class="text">Valider</span>
+            </a>
+        </div>
+        <div class="app-page-action-paging">
+            <span>de {{vm.of}} à {{vm.to}} / {{vm.TotalCount}}</span>
+            <button ng-click="vm.navigateTo('prev')" ng-disabled="vm.of == 1">
+                <span class="icon ion-arrow-left-b"></span>
+            </button>
+            <button ng-click="vm.navigateTo('next')" ng-disabled="vm.to >= vm.TotalCount || vm.TotalCount == 0">
+                <span class="icon ion-arrow-right-b"></span>
+            </button>
+        </div>
+    </div> -->
+
+    <div class="app-patient-bar-action" ng-show="vm.showSearchForm == true">
+        <form name="searchForm" novalidate>
+            <select 
+                    ng-model="vm.cmd_range"
+                    ng-change="vm.cmdChange()">
+                <option value="1">Aujourd'hui</option>
+                <option value="0">Autres</option>
+            </select>
+            <input class="searchBox" type="text"
+                   ng-model="vm.searchText"
+                   ng-change="vm.searchTextChanged()"
+                   placeholder="Rechercher" />
+            <button ng-click="vm.lookUp()">
+                <span class="icon ion-android-search"></span>
+            </button>
+        </form>
+    </div>
+
+    <div class="app-patient-main">
+        <div class="tab">
+            <div class="tab-items" ng-init="vm.selectedTab = 1">
+                <div ng-click="vm.onStateChange(1)" class="tab-item" ng-class="{'active':vm.selectedTab === 1}">
+                    <span class="icon ion-document"></span>
+                    <div class="info">
+                        <h3 class="text">
+                            <span>Attente </span>
+                            <span class="bullet-a">{{vm.nbreAttente}}</span>
+                        </h3>
+                        <p>{{vm.montantAttente | currency:'F.CFA':0}}</p>
+                    </div>
+                </div>
+                <div ng-click="vm.onStateChange(2)" class="tab-item" ng-class="{'active':vm.selectedTab === 2}">
+                    <span class="icon ion-document"></span>
+                    <div class="info">
+                        <h3 class="text">
+                            <span>Payé </span>
+                            <span class="bullet-a">{{vm.nbrePaye}}</span>
+                        </h3>
+                        <p>{{vm.montantPaye | currency:'F.CFA':0}}</p>
+                    </div>
+                </div>
+                <div ng-click="vm.onStateChange(3)" class="tab-item" ng-class="{'active':vm.selectedTab === 3}">
+                    <span class="icon ion-document"></span>
+                    <div class="info">
+                        <h3 class="text">
+                            <span>Annulé </span>
+                            <span class="bullet-a">{{vm.nbreAnnule}}</span>
+                        </h3>
+                        <p>{{vm.montantAnnule | currency:'F.CFA':0}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-list">
+                <div class="app-patient-main-item"
+                     ng-show="vm.filteredCount == 0">
+                    <h2>Aucune commande enregistré</h2>
+                </div>
+                <div id="clientList" class="app-patient-main-item" ng-show="vm.filteredCount > 0"
+                     ng-repeat="p in vm.filteredcommande">
+                    <!--<item-list patient="p"></item-list>-->
+
+
+                    <div class="item" ng-class="{ active : vm.selectedIndex == p.id }" ng-click="vm.itemClicked(p.id)">
+                        <span class="item-nom">
+                            {{p.patientFullname}}
+                        </span>
+                        <span class="item-telephone">
+                            <span>{{p.contratLib}}</span>
+                        </span>
+                        <span class="item-birth">{{p.totalNetAPayer | currency:'F.CFA':0}} F.CFA</span>
+                        <span class="item-birth">{{p.currentStateLib}}</span>
+                        <span class="item-birth">{{p.submitterNom}}</span>
+                        <span class="item-birth">{{p.ownerNom}}</span>
+                        <span class="item-birth">
+                            <span>{{p.analyseNumber}}</span>
+                            <span class="ion-beaker"></span>
+                        </span>
+                        <span class="item-date">
+                            <span am-time-ago="p.insertDate"></span>
+                            <!--<span>{{p.insertDate | amDurationFormat : 'minute' }}</span>-->
+                        </span>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+        
+    </div>
+    <div id="patientBox"></div>
+    <div class="app-patient-foot"></div>
+</div>

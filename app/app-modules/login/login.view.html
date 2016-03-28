@@ -1,0 +1,27 @@
+﻿<div class="app-login">
+    <div class="app-login-bar">
+        <img src="app/app-content/img/logo.png" class="logo"/>
+    </div>
+    <div class="app-login-banner">
+        <h1>Connecter vous à sysgas</h1>
+        <h2>Entrer votre nom d'utilisateur et votre mot de passe</h2>
+    </div>
+    <div class="app-login-card">
+        <form name="form" ng-submit="vm.login()" novalidate>
+            <div class="form-group" ng-class="{ 'has-error': form.username.$dirty && form.username.$error.required }">
+                <input type="text" name="username" placeholder="Nom utilisateur" ng-model="vm.username" required/>
+                <span ng-show="form.username.$dirty && form.username.$error.required" class="help-block">Username is required</span>
+            </div>
+            <div class="form-group" ng-class="{ 'has-error': form.password.$dirty && form.password.$error.required }">
+                <input type="password" name="password" placeholder="Mot de passe" ng-model="vm.password" required/>
+                <span ng-show="form.password.$dirty && form.password.$error.required" class="help-block">Password is required</span>
+            </div>
+            <div class="form-actions">
+                <button type="submit" ng-disabled="form.$invalid || vm.dataLoading" class="btn btn-primary">Login</button>
+                <!--<div ng-if="vm.dataLoading" class="app-loading">
+                    <i class="icon ion-loading-c"></i>
+                </div>-->
+            </div>
+        </form>
+    </div>
+</div>

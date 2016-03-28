@@ -1,0 +1,82 @@
+﻿<div class="app-patient">
+    <div class="app-patient-bar">
+        <div class="app-patient-bar-title">
+            <h1>Patient</h1>
+        </div>
+        <div class="app-page-action" sticky-nav>
+            <div class="app-page-action-button">
+                <a href="#/dashboard">
+                    <div class="icons-icon mdl2-settings"></div>
+                </a>
+                <a href="#/patientedit/0">
+                    <span class="icon ion-compose"></span>
+                    <span class="text">Nouveau</span>
+                </a>
+                <a href="#/patientedit/{{vm.selectedIndex}}" ng-show="vm.selectedIndex > 0">
+                    <span class="icon ion-edit"></span>
+                    <span class="text">Modifier</span>
+                </a>
+                <a href="#/patient/{{vm.selectedIndex}}" ng-show="vm.selectedIndex > 0">
+                    <span class="icon ion-document"></span>
+                    <span class="text">Historique</span>
+                </a>
+                <a href="#/patientcmd/{{vm.selectedIndex}}/0" ng-show="vm.selectedIndex > 0">
+                    <span class="icon ion-ios7-cart"></span>
+                    <span class="text">Nouvelle commande</span>
+                </a>
+            </div>
+            <div class="app-page-action-paging">
+                <span>de {{vm.of}} à {{vm.to}} / {{vm.TotalCount}}</span>
+                <button ng-click="vm.navigateTo('prev')" ng-disabled="vm.of == 1">
+                    <span class="icon ion-arrow-left-b"></span>
+                </button>
+                <button ng-click="vm.navigateTo('next')" ng-disabled="vm.to >= vm.TotalCount || vm.TotalCount == 0">
+                    <span class="icon ion-arrow-right-b"></span>
+                </button>
+            </div>
+        </div>
+        <div class="app-patient-bar-action">
+            <form name="searchForm" novalidate>
+                <input class="searchBox" type="text"
+                       ng-model="vm.searchText"
+                       ng-change="vm.searchTextChanged()"
+                       placeholder="Rechercher par nom, prénom, telephone" />
+                <button ng-click="vm.lookUp()">
+                    <span class="icon ion-android-search"></span>
+                </button>
+            </form>
+        </div>
+    </div>
+    
+    
+    <div class="app-patient-main">
+        <div class="app-patient-main-item"
+             ng-show="vm.filteredCount == 0">
+            <h2>Aucun patient enregistré</h2>
+        </div>
+        <div id="clientList" class="app-patient-main-item" ng-show="vm.filteredCount > 0"
+             ng-repeat="p in vm.filteredPatient">
+            <!--<item-list patient="p"></item-list>-->
+
+
+            <div class="item" ng-class="{ active : vm.selectedIndex == p.id }" ng-click="vm.itemClicked(p.id)">
+                <span class="item-nom">
+                    {{p.nom + ' ' + p.prenom}}
+                </span>
+                <span class="item-telephone" ng-show="p.telephone != null">
+                    <span class="ion-ios7-telephone"></span>
+                    <span>{{p.telephone}}</span>
+                </span>
+                <span class="item-birth">Né le {{p.moisNaissance + '-' + p.jourNaissance + '-' + p.anneeNaissance | amDateFormat:'Do MMMM YYYY'}}</span>
+                <span class="item-date">
+                    <span am-time-ago="p.insertDate"></span>
+                    <!--<span>{{p.insertDate | amDurationFormat : 'minute' }}</span>-->
+                </span>
+            </div>
+
+
+        </div>
+    </div>
+    <div id="patientBox"></div>
+    <div class="app-patient-foot"></div>
+</div>

@@ -1,0 +1,179 @@
+﻿<div class="app-patient">
+    <div class="app-patient-bar">
+        <div class="app-patient-bar-title">
+            <h1>{{vm.title}} d'un employé</h1>
+        </div>
+        <div class="app-page-action">
+            <ul>
+                <li>
+                    <a href="#/employee" title="Retour à la liste">
+                        <div class="icons-icon mdl2-arrow-HTML-legacy"></div>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="app-panel">
+        <div class="app-panel-main">
+            <form name="employeeForm" novalidate>
+                <div class="aq">
+                    <p>Les champs avec (*) sont requis</p>
+                </div>
+                <div class="aq">
+                    <label>Titre :</label>
+                    <select name="titreId"
+                            ng-model="vm.employee.titreId"
+                            ng-options="p.titreId as p.titreLib for p in vm.titres"
+                            required ng-focus>
+                        <option value="">Choisir le titre</option>
+                    </select>
+                    <div class="errorMessage" ng-show="employeeForm.titreId.$invalid && employeeForm.titreId.$focused">
+                        <small class="error" ng-show="employeeForm.titreId.$error.required">
+                            Ce champs est requis !
+                        </small>
+                    </div>
+                </div>
+                <div class="aq">
+                    <label>Nom : </label>
+                    <input type="text" name="nom" ng-model="vm.employee.nom" ng-minlength="3" required ng-focus />
+                    <div class="errorMessage" ng-show="employeeForm.nom.$invalid && employeeForm.nom.$focused">
+                        <small class="error" ng-show="employeeForm.nom.$error.required">
+                            Ce champs est requis !
+                        </small>
+                        <small class="error" ng-show="employeeForm.nom.$error.minlength">
+                            Minimum 3 caractères !
+                        </small>
+                    </div>
+                </div>
+                <div class="aq">
+                    <label>Prénom : </label>
+                    <input type="text" name="prenom" ng-model="vm.employee.prenom" ng-minlength="3" required ng-focus />
+                    <div class="errorMessage" ng-show="employeeForm.prenom.$invalid && employeeForm.prenom.$focused">
+                        <small class="error" ng-show="employeeForm.prenom.$error.required">
+                            Ce champs est requis !
+                        </small>
+                        <small class="error" ng-show="employeeForm.prenom.$error.minlength">
+                            Minimum 3 caractères !
+                        </small>
+                    </div>
+                </div>
+                <div class="aq">
+                    <label>Date de naissance :</label>
+                    <select name="jourNaissance"
+                            ng-model="vm.employee.jourNaissance"
+                            ng-options="jour.jourNumber as jour.jourNumber for jour in vm.jours"
+                            required ng-focus>
+                        <option value="">JOUR</option>
+                    </select>
+                    <select name="moisNaissance"
+                            ng-model="vm.employee.moisNaissance"
+                            ng-options="mois.moisNumber as mois.moisLib for mois in vm.mois"
+                            required ng-focus>
+                        <option value="">MOIS</option>
+                    </select>
+                    <select name="anneeNaissance"
+                            ng-model="vm.employee.anneeNaissance"
+                            ng-options="annee.anneeLib as annee.anneeLib for annee in vm.annees"
+                            required ng-focus>
+                        <option value="">ANNEE</option>
+                    </select>
+                    <div class="errorMessage" ng-show="employeeForm.jourNaissance.$invalid && employeeForm.jourNaissance.$focused">
+                        <small class="error" ng-show="employeeForm.jourNaissance.$error.required">
+                            Ce champs est requis !
+                        </small>
+                    </div>
+                    <div class="errorMessage" ng-show="employeeForm.moisNaissance.$invalid && employeeForm.moisNaissance.$focused">
+                        <small class="error" ng-show="employeeForm.moisNaissance.$error.required">
+                            Ce champs est requis !
+                        </small>
+                    </div>
+                    <div class="errorMessage" ng-show="employeeForm.anneeNaissance.$invalid && employeeForm.anneeNaissance.$focused">
+                        <small class="error" ng-show="employeeForm.anneeNaissance.$error.required">
+                            Ce champs est requis !
+                        </small>
+                    </div>
+                </div>
+                <div class="aq" ng-init="vm.employee.genre=1">
+                    <label>Genre:</label>
+                    <div class="radio">
+                        <label class="radio">
+                            <input type="radio" ng-model="vm.employee.genre" name="genre" value="1" ng-checked="1" />
+                            Masculin
+                        </label>
+                    </div>
+                    <div class="radio">
+                        <label class="radio">
+                            <input type="radio" ng-model="vm.employee.genre" name="genre" value="0" />
+                            Feminin
+                        </label>
+                    </div>
+                </div>
+                <div class="aq">
+                    <label>Email Adresse :</label>
+                    <input type="email" name="email" ng-model="vm.employee.email" />
+                </div>
+                <div class="aq">
+                    <label>Numéro de téléphone :</label>
+                    <input type="text" name="telephone" ng-model="vm.employee.telephone" pattern="([0-9]{3})" maxlength="8" required ng-focus />
+                    <!-- Show error if touched and unique is in error -->
+                    <div class="errorMessage" ng-show="employeeForm.telephone.$invalid && employeeForm.telephone.$focused">
+                        <small class="error" ng-show="employeeForm.telephone.$error.required">
+                            Ce champs est requis !
+                        </small>
+                    </div>
+                </div>
+                <div class="aq">
+                    <label>Nationalité :</label>
+                    <select name="paysId"
+                            ng-model="vm.employee.paysId"
+                            ng-options="p.id as p.paysLib for p in vm.pays"
+                            required ng-focus>
+                        <option value="">Choisir un pays</option>
+                    </select>
+                    <div class="errorMessage" ng-show="employeeForm.paysId.$invalid && employeeForm.paysId.$focused">
+                        <small class="error" ng-show="employeeForm.paysId.$error.required">
+                            Ce champs est requis !
+                        </small>
+                    </div>
+                </div>
+
+                <div class="aq">
+                    <label>Type de pièce : </label>
+                    <select name="typePieceFournitId"
+                            ng-model="vm.employee.typePieceFournitId"
+                            ng-options="tp.id as tp.typePieceFournitLib for tp in vm.typePieceFournits" 
+                            required ng-focus>
+                        <option value="">Type de pièce</option>
+                    </select>
+                    <div class="errorMessage" ng-show="employeeForm.typePieceFournitId.$invalid && employeeForm.typePieceFournitId.$focused">
+                        <small class="error" ng-show="employeeForm.typePieceFournitId.$error.required">
+                            Ce champs est requis !
+                        </small>
+                    </div>
+                </div>
+                <div class="aq">
+                    <label>Numéro de la pièce : </label>
+                    <input type="text" ng-model="vm.employee.numeroPiece" />
+                </div>
+                <div class="aq">
+                    <label class="col-md-2">Adresse:</label>
+                    <input type="text" name="adresse" ng-model="vm.employee.adresse" />
+                </div>
+                <div class="aq">
+                    <button type="submit" ng-click="vm.saveEmployee()"
+                            ng-disabled="employeeForm.$invalid">
+                        {{vm.buttonText}}
+                    </button>
+                </div>
+                <div class="message" ng-show="vm.updateStatus">
+                    <div class="label label-success">
+                        <span class="glyphicon glyphicon-thumbs-up icon-white"></span>
+                        <span>{{ vm.message }}</span>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="app-panel-foot"></div>
+    </div>
+</div>

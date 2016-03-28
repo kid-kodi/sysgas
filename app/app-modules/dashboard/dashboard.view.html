@@ -1,0 +1,33 @@
+﻿<div class="app-patient">
+    <div class="app-patient-bar">
+        <div class="app-patient-bar-title">
+            <h1>Dashboard</h1>
+        </div>
+    </div>
+    <div class="app-patient-main">
+        <div class="dash-cont">
+            <h1>Patients</h1>
+            <div class="dash-card">
+                <div class="icon">
+                    <span class="icon ion-android-social"></span>
+                </div>
+                <div class="text">
+                    <h2>{{vm.patient_stats.statsLib}}</h2>
+                    <p>{{vm.patient_stats.statsNumber}}</p>
+                </div>
+            </div>
+        </div>
+        <div class="dash-cont">
+            <h1>Commande</h1>
+            <div class="dash-card">
+                <div class="icon">
+                    <span class="icon ion-ios7-cart"></span>
+                </div>
+                <div class="text">
+                    <h2>{{vm.commande_stats.statsLib}}</h2>
+                    <p>{{vm.commande_stats.statsNumber}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,179 @@
+﻿<div class="app-details" ng-show="vm.init == true">
+    <div class="app-patient-bar">
+        <div class="app-patient-bar-title">
+            <h1>Détails</h1>
+        </div>
+        <div class="app-page-action" sticky-nav>
+            <ul>
+                <li>
+                    <a href="#/patient" title="Liste des patients">
+                        <div class="icons-icon mdl2-arrow-HTML-legacy"></div>
+                    </a>
+                </li>
+                <li class="icons-item">
+                    <a href="#/patientedit/{{vm.patient.id}}"
+                    title="Modifier patient">
+                        <div class="icons-icon mdl2-edit"></div>
+                    </a>
+                </li>
+                <li>
+                    <a href="#/patientcmd/{{vm.patient.id}}/0"
+                    title="Ajouter commande">
+                        <div class="icons-icon mdl2-new-folder"></div>
+                    </a>
+                </li>
+                <li ng-show="vm.selectedIndex > 0 && vm.selectedTab == 1">
+                    <a href="#/patientcmd/{{vm.patient.id}}/{{vm.selectedIndex}}"
+                    title="Modifier commande">
+                        <div class="icons-icon mdl2-page"></div>
+                    </a>
+                </li>
+                <li ng-show="vm.selectedIndex > 0 && vm.selectedTab == 1">
+                    <a href="#/patientcmd/{{vm.patient.id}}/{{vm.selectedIndex}}" 
+                    title="Analyses liste">
+                        <div class="icons-icon mdl2-bulleted-list"></div>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="app-details-card">
+        <div class="app-details-card-info">
+            <div class="app-details-card-info-avtr">
+                <img src="app/app-content/img/man.png" ng-show="vm.patient.genre == '1'"/>
+                <img src="app/app-content/img/woman.png" ng-show="vm.patient.genre == '0'"/>
+            </div>
+            <div class="app-details-card-info-nom">
+                <h1>{{vm.patient.fullname}}</h1>
+                <h3>
+                    <span>Né le </span>
+                    <span>{{vm.patient.fullBirthDate | amDateFormat:'Do MMMM YYYY'}}</span>
+                </h3>
+                <h3>
+                    <span class="icon ion-ios7-telephone"></span>
+                    <span>{{vm.patient.telephone}} </span>
+                </h3>
+                <h3>
+                    <span class="icon ion-calendar"></span>
+                    <span>Enregistré le {{vm.patient.insertDate | amDateFormat:'Do MMMM YYYY'}}</span>
+                </h3>
+            </div>
+        </div>
+    </div>
+
+    <div class="app-detail-list">
+        <div class="tab">
+            <div class="tab-items" ng-init="vm.selectedTab = 1">
+                <div ng-click="vm.filterCommande(1)" class="tab-a" ng-class="{'active':vm.selectedTab === 1}">
+                    <span class="icon ion-android-clock"></span>
+                    <div class="info">
+                        <h3 class="text">
+                            <span>Attente </span>
+                            <span class="bullet-a">{{vm.nbreAttente}}</span>
+                        </h3>
+                    </div>
+                </div>
+                <div ng-click="vm.filterCommande(2)" class="tab-a" ng-class="{'active':vm.selectedTab === 2}">
+                    <span class="icon ion-android-promotion"></span>
+                    <div class="info">
+                        <h3 class="text">
+                            <span>Payé </span>
+                            <span class="bullet-a">{{vm.nbreRegle}}</span>
+                        </h3>
+                    </div>
+                </div>
+                <div ng-click="vm.filterCommande(3)" class="tab-a" ng-class="{'active':vm.selectedTab === 3}">
+                    <span class="icon ion-alert"></span>
+                    <div class="info">
+                        <h3 class="text">
+                            <span>Annulé </span>
+                            <span class="bullet-a">{{vm.nbreAnnule}}</span>
+                        </h3>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-list">
+                <div class="app-patient-main-item"
+                     ng-show="vm.filteredCommandes.length == 0">
+                    <h2>Aucune commande enregistré</h2>
+                </div>
+                <div id="clientList" class="app-patient-main-item" ng-show="vm.filteredCommandes.length > 0"
+                     ng-repeat="p in vm.filteredCommandes">
+                    <!--<item-list patient="p"></item-list>-->
+
+
+                    <div class="item" ng-class="{ active : vm.selectedIndex == p.id }" ng-click="vm.itemClicked(p.id)">
+                        <span class="item-nom">
+                            {{p.patientFullname}}
+                        </span>
+                        <span class="item-telephone">
+                            <span>{{p.societeLib}}</span>
+                        </span>
+                        <span class="item-birth">{{p.totalNetAPayer}} F.CFA</span>
+                        <span class="item-birth">{{p.currentStateLib}}</span>
+                        <span class="item-birth">{{p.submitterNom}}</span>
+                        <span class="item-birth">{{p.ownerNom}}</span>
+                        <span class="item-birth">
+                            <span>{{p.analyseNum}}</span>
+                            <span class="ion-beaker"></span>
+                        </span>
+                        <span class="item-date">
+                            <span am-time-ago="p.insertDate"></span>
+                            <!--<span>{{p.insertDate | amDurationFormat : 'minute' }}</span>-->
+                        </span>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+
+    <!--<div class="app-detail-list">
+        <div class="app-detail-list-bar">
+            <button class="btn" ng-click="vm.ToggleForm('commande')">nouvelle</button>
+        </div>
+        <div class="app-detail-list-cont">
+            <div class="filters">
+                <div class="filters-item active" ng-click="vm.filterCommande(1)">
+                    <span class="icon ion-android-clock"></span>
+                    <span>en attente</span>
+                    <span>{{vm.nbreAttente}}</span>
+                </div>
+                <div class="filters-item" ng-click="vm.filterCommande(2)">
+                    <span class="icon ion-android-promotion"></span>
+                    <span>reglé</span>
+                    <span>{{vm.nbreRegle}}</span>
+                </div>
+                <div class="filters-item" ng-click="vm.filterCommande(3)">
+                    <span class="icon ion-alert"></span>
+                    <span>annulé</span>
+                    <span>{{vm.nbreAnnule}}</span>
+                </div>
+            </div>
+
+            <div class="item" data-ng-repeat="commande in vm.filteredCommandes">
+                <div class="fullname">{{vm.patient.nom + ' ' + vm.patient.prenom}}</div>
+                <div class="societe">{{commande.societeLib}}</div>
+                <div class="netpaye">{{commande.totalNetAPayer}} F.CFA</div>
+                <div class="istatus">{{commande.currentStateLib}}</div>
+                <div class="createdby">{{commande.submitterNom}}</div>
+                <div class="sendto">{{commande.ownerNom}}</div>
+                <div class="idate"><span am-time-ago="commande.insertDate"></span></div>
+                <div class="action" ng-hide="commande.currentStateId > 1">
+                    <button ng-click="vm.getCommande(commande.id)">Modifier</button>
+                    <button ng-click="vm.getFacture(commande.id)">Factures</button>
+                </div>
+            </div>
+        </div>
+    </div>-->
+
+    <div ng-show="vm.commandes.length == 0">
+        <div class="app-box empty">
+            <h1>Aucune commande enregistrée</h1>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,217 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>sysgas</title>
+    <!--css third party-->
+    <link href="app/app-content/third-party/mdl2.css" rel="stylesheet"/>
+    <link href="app/app-content/third-party/autocomplete.css" rel="stylesheet"/>
+    <link href="app/app-content/third-party/ionicons.min.css" rel="stylesheet"/>
+    <link href="app/app-content/third-party/loading-bar.css" rel="stylesheet"/>
+    <link href="app/app-content/third-party/loading-bar.min.css" rel="stylesheet"/>
+
+    <!--our css-->
+    <link href="app/app-content/app.css" rel="stylesheet"/>
+    <link href="app/app-content/app.login.css" rel="stylesheet"/>
+    <link href="app/app-content/app.buttons.css" rel="stylesheet"/>
+    <link href="app/app-content/app.cmd.css" rel="stylesheet"/>
+    <link href="app/app-content/app.details.css" rel="stylesheet"/>
+    <link href="app/app-content/app.modal.css" rel="stylesheet"/>
+    <link href="app/app-content/app.nav.css" rel="stylesheet"/>
+    <link href="app/app-content/app.panel.css" rel="stylesheet"/>
+    <link href="app/app-content/app.patient.css" rel="stylesheet"/>
+    <link href="app/app-content/app.shell.css" rel="stylesheet"/>
+    <link href="app/app-content/app.ui.css" rel="stylesheet"/>
+    <link href="app/app-content/app.widgets.css" rel="stylesheet"/>
+    <link href="app/app-content/card.client.css" rel="stylesheet"/>
+    <link href="app/app-content/app.form.css" rel="stylesheet"/>
+
+    <!--third party js-->
+    <script src="app/app-vendors/taffydb-2.6.2.js"></script>
+    <script src="app/app-vendors/jquery-2.0.2.min.js"></script>
+    <script src="app/app-vendors/angular.min.js"></script>
+    <script src="app/app-vendors/angular-route.min.js"></script>
+    <script src="app/app-vendors/angular-cookies.min.js"></script>
+    <script src="app/app-vendors/angular-animate.min.js"></script>
+    <script src="app/app-vendors/angular-locale_fr-fr.js"></script>
+    <script src="app/app-vendors/moment.js"></script>
+    <script src="app/app-vendors/angular-moment.min.js"></script>
+    <script src="app/app-vendors/loading-bar.min.js"></script>
+
+    <!--<script src="app/common/vendors/jquery-2.0.2.min.js"></script>
+    <script src="app/common/vendors/jquery.signalR-1.1.2.min.js"></script>-->
+    <!-- <script src="Scripts/jquery-1.6.4.min.js"></script>
+    <script src="Scripts/jquery.signalR-2.2.0.min.js"></script>
+    <script src="signalr/hubs"></script> -->
+
+    <!--our js-->
+    <script src="app/app.js"></script>
+    <script src="app/app-services/authentication.service.js"></script>
+    <script src="app/app-services/authInterceptor.js"       ></script>
+
+    <script src="app/app-services/flash.service.js"></script>
+
+    <script src="app/app-directives/stickyNav.js"></script>
+    <script src="app/app-directives/routeLoading.js"></script>
+    <script src="app/app-directives/menuHighlighter.js"></script>
+    <script src="app/app-directives/ngFocus.js"></script>
+    <script src="app/app-directives/printer.js"></script>
+    <script src="app/app-directives/autocomplete.js"></script>
+
+    <!-- Real user service that uses an api -->
+    <script src="app/app-services/user.service.js"></script>
+    <!-- Fake user service for demo that uses local storage -->
+    <!--<script src="app/app-services/user.service.local-storage.js"></script>-->
+
+    <!--ours login js-->
+    <script src="app/app-modules/login/login.controller.js"></script>
+
+    <!-- our main js-->
+    <script src="app/app-controllers/main.controller.js"></script>
+
+    <!--our dashboard js-->
+    <script src="app/app-modules/dashboard/dashboard.controller.js"></script>
+
+    <!--ours patients js-->
+    <script src="app/app-modules/patients/controllers/patientCmd.Controller.js"></script>
+    <script src="app/app-modules/patients/controllers/patientDetails.Controller.js"></script>
+    <script src="app/app-modules/patients/controllers/patientEdit.Controller.js"></script>
+    <script src="app/app-modules/patients/controllers/patientListe.Controller.js"></script>
+    <script src="app/app-modules/patients/services/patient.service.js"></script>
+    <script src="app/app-modules/patients/filters/patient.filter.js"></script>
+
+    <!--ours commande js -->
+    <script src="app/app-modules/commandes/services/commande.service.js"></script>
+    <script src="app/app-modules/commandes/filters/commande.filter.js"></script>
+    <script src="app/app-modules/commandes/controllers/commandeListe.controller.js"></script>
+    <script src="app/app-modules/commandes/controllers/commandeDetail.controller.js"></script>
+
+    <!--ours facture js-->
+    <script src="app/app-modules/factures/services/facture.service.js"></script>
+    <script src="app/app-modules/factures/filters/facture.filter.js"></script>
+    <script src="app/app-modules/factures/controllers/factureListe.controller.js"></script>
+
+    <!--ours employees js-->
+    <script src="app/app-modules/employees/controllers/employeeAcct.controller.js"></script>
+    <script src="app/app-modules/employees/controllers/employeeDetails.Controller.js"></script>
+    <script src="app/app-modules/employees/controllers/employeeEdit.controller.js"></script>
+    <script src="app/app-modules/employees/controllers/employeeListe.controller.js"></script>
+    <script src="app/app-modules/employees/filters/emmployee.filter.js"></script>
+    <script src="app/app-modules/employees/services/employee.service.js"></script>
+
+    <!--ours role js-->
+    <script src="app/app-modules/roles/services/role.service.js"></script>
+    <script src="app/app-modules/roles/filters/role.filter.js"></script>
+    <script src="app/app-modules/roles/controllers/roleListe.controller.js"></script>
+    <script src="app/app-modules/roles/controllers/roleEdit.controller.js"></script>
+
+    <!--our societe js-->
+    <script src="app/app-modules/societes/controllers/societeContrat.controller.js"></script>
+    <script src="app/app-modules/societes/controllers/societeEdit.controller.js"></script>
+    <script src="app/app-modules/societes/controllers/societeListe.controller.js"></script>
+    <script src="app/app-modules/societes/filters/societe.filter.js"></script>
+    <script src="app/app-modules/societes/services/societe.service.js"></script>
+
+    <!--our departement js-->
+    <script src="app/app-modules/departements/controllers/departementEdit.controller.js"></script>
+    <script src="app/app-modules/departements/controllers/departementListe.controller.js"></script>
+    <script src="app/app-modules/departements/filters/departement.filter.js"></script>
+    <script src="app/app-modules/departements/services/departement.service.js"></script>
+
+    <!--our analyse js-->
+    <script src="app/app-modules/analyses/services/analyse.service.js"></script>
+    <script src="app/app-modules/analyses/filters/analyse.filter.js"></script>
+    <script src="app/app-modules/analyses/controllers/analyseliste.controller.js"></script>
+    <script src="app/app-modules/analyses/controllers/analyseedit.controller.js"></script>
+
+    <!--our unite js-->
+    <script src="app/app-modules/unites/controllers/uniteedit.controller.js"></script>
+    <script src="app/app-modules/unites/controllers/uniteliste.controller.js"></script>
+    <script src="app/app-modules/unites/filters/unite.filter.js"></script>
+    <script src="app/app-modules/unites/services/unite.service.js"></script>
+
+    <!--our mes commandes js-->
+    <script src="app/app-modules/mescommandes/controllers/mescommandedetail.controller.js"></script>
+    <script src="app/app-modules/mescommandes/controllers/mescommandeliste.controller.js"></script>
+    <script src="app/app-modules/mescommandes/filters/mescommande.filter.js"></script>
+    <script src="app/app-modules/mescommandes/services/mescommande.service.js"></script>
+
+
+    <!--our all commandes js-->
+    <script src="app/app-modules/allcommandes/controllers/allcommandedetail.controller.js"></script>
+    <script src="app/app-modules/allcommandes/controllers/allcommandeliste.controller.js"></script>
+    <script src="app/app-modules/allcommandes/filters/allcommande.filter.js"></script>
+    <script src="app/app-modules/allcommandes/services/allcommande.service.js"></script>
+
+    <!--our laboratoire js-->
+    <script src="app/app-modules/laboratoires/controllers/laboratoireedit.controller.js"></script>
+    <script src="app/app-modules/laboratoires/controllers/laboratoireliste.controller.js"></script>
+    <script src="app/app-modules/laboratoires/filters/laboratoire.filter.js"></script>
+    <script src="app/app-modules/laboratoires/services/laboratoire.service.js"></script>
+
+</head>
+<body>
+    <div id="app" ng-app="app" ng-controller="mainController as vm">
+        <div class="app-flash">
+            <span ng-if="flash" ng-bind="flash.message"></span>
+        </div>
+        <div class="app-head" ng-show="vm.currentUser != null">
+            <div class="app-head-logo">
+                <h1>{{vm.appTitle}}</h1>
+            </div>
+            <div class="app-head-title">
+                <h1>{{vm.pageTitle}}</h1>
+            </div>
+            <div class="app-head-acct">
+                <ul>
+                    <li class="icons-item">
+                        <a href="#/dashboard">
+                        <div class="icons-icon mdl2-settings"></div>
+                        </a>
+                    </li>
+                    
+                    <li>
+                        <a href="#/dashboard">
+                            <div class="icons-icon mdl2-globe"></div>
+                        </a>
+                    </li>
+                    <li id="user-card" ng-click="vm.toggleCard()">
+                        <a data-href="#">
+                            <img src="app/app-content/img/man.png"/>
+                            <span>{{vm.currentUser.username}}</span>
+                        </a>
+                        <div class="arrow-box" ng-show="vm.IsCard == true">
+                            <div class="arrow-box-main">
+                                <ul>
+                                    <li ng-click="vm.loginOrOut()">
+                                        <a data-href="#/login">
+                                            <span>Déconnexion</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+        <div class="app-nav" ng-show="vm.currentUser != null">
+            <ul menu-highlighter highlight-class-name="active">
+                <li ng-repeat="p in vm.currentUser.userPermissions">
+                    <a href="{{p.permissionUrl}}">
+                        <span class="icon {{p.permissionIcon}}"></span>
+                        <span class="text">{{p.permissionLib}}</span>
+                        <span class="bullet-b">0</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="app-main">
+            <div ng-view></div>
+        </div>
+
+
+    </div>
+</body>
+</html>

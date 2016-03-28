@@ -1,0 +1,119 @@
+﻿<div class="app-details" ng-show="vm.init == true">
+    <div class="app-details-card">
+        <div class="app-details-card-info">
+            <div class="app-details-card-info-avtr">
+                <img src="app/app-content/img/man.png" ng-show="vm.patient.genre == '1'" />
+                <img src="app/app-content/img/woman.png" ng-show="vm.patient.genre == '0'" />
+            </div>
+            <div class="app-details-card-info-nom">
+                <h1>{{vm.patient.fullname}}</h1>
+                <h3>
+                    <span>Né le </span>
+                    <span>{{vm.patient.fullBirthDate | amDateFormat:'Do MMMM YYYY'}}</span>
+                </h3>
+                <h3>
+                    <span class="icon ion-ios7-telephone"></span>
+                    <span>{{vm.patient.telephone}} </span>
+                </h3>
+                <h3>
+                    <span class="icon ion-calendar"></span>
+                    <span>Enregistré le {{vm.patient.insertDate | amDateFormat:'Do MMMM YYYY'}}</span>
+                </h3>
+            </div>
+        </div>
+    </div>
+
+    <div class="app-page-action">
+        <div class="app-page-action-button">
+            <a href="#/commande">
+                <span class="icon ion-arrow-left-c"></span>
+                <span class="text">Retour à la liste</span>
+            </a>
+            <a ng-click="vm.printFacture(vm.commande.id)"
+               ng-show="vm.commande.currentStateId == 2">
+                <span class="icon ion-android-printer"></span>
+                <span class="text">Imprimer</span>
+            </a>
+            <a
+               ng-click="vm.valideCommande(vm.commande.id)" 
+               ng-show="vm.commande.currentStateId == 1">
+                <span class="icon ion-ios7-cart"></span>
+                <span class="text">Valider</span>
+            </a>
+        </div>
+    </div>
+
+    <div class="app-detail-list">
+        <div class="app-detail-list-cont">
+            <div class="filters">
+                <div class="filters-item">
+                    <span class="icon ion-cash"></span>
+                    <span>Net à payer</span>
+                    <span>{{vm.commande.totalNetAPayer | currency : 'F.CFA'}}</span>
+                </div>
+                <div class="filters-item">
+                    <span class="icon ion-aperture"></span>
+                    <span>Total B</span>
+                    <span>{{vm.commande.totalNbreB}}</span>
+                </div>
+                <div class="filters-item">
+                    <span class="icon ion-beaker"></span>
+                    <span>Nombre d'analyse</span>
+                    <span>{{vm.commande.analyseNumber}}</span>
+                </div>
+                <div class="filters-item">
+                    <span class="icon ion-clock"></span>
+                    <span>Etat actuelle</span>
+                    <span>{{vm.commande.currentStateLib}}</span>
+                </div>
+            </div>
+
+            <div class="i-row">
+                <div>
+                    <h3>Envoyé par</h3>
+                    <span class="text">{{vm.commande.submitterNom}}</span>
+                </div>
+                <div>
+                    <h3>Envoyé à</h3>
+                    <span class="text">{{vm.commande.ownerNom}}</span>
+                </div>
+            </div>
+            <div class="i-row">
+                <div>
+                    <h3>Etablissement sanitaire</h3>
+                    <span class="text">{{vm.commande.etabSanitaireLib}}</span>
+                </div>
+                <div>
+                    <h3>Nom du medecin</h3>
+                    <span class="text">{{vm.commande.nomMedecin}}</span>
+                </div>
+            </div>
+            <div class="i-row">
+                <div>
+                    <h3>Societe</h3>
+                    <span class="text">{{vm.commande.societeLib}}</span>
+                </div>
+                <div>
+                    <h3>Service Medecin</h3>
+                    <span class="text">{{vm.commande.serviceMedecinLib}}</span>
+                </div>
+            </div>
+            <div class="i-row">
+                <div>
+                    <h3>Téléphone du medecin</h3>
+                    <span class="text">{{vm.commande.telephoneMedecin}}</span>
+                </div>
+                <div>
+                    <h3>Type de patient</h3>
+                    <span class="text">{{vm.commande.typePatientLib}}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div ng-show="vm.commandes.length == 0">
+        <div class="app-box empty">
+            <h1>Aucune commande enregistrée</h1>
+        </div>
+    </div>
+</div>

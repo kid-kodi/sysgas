@@ -1,0 +1,136 @@
+/*
+ * app.css
+ * Root nameappce styles
+*/
+
+/** Begin reset */
+  * {
+    margin  : 0;
+    padding : 0;
+    -webkit-box-sizing : border-box;
+    -moz-box-sizing    : border-box;
+    box-sizing         : border-box;
+  }
+  h1,h2,h3,h4,h5,h6,p {/* margin-bottom : 10px; */}
+  ol,ul,dl { list-style-position : inside;
+    list-style-type: none;
+}
+/** End reset */
+
+/** Begin standard selectors */
+  body {
+    font : 13px 'Segoe UI', Verdana, Helvetica, Arial, sans-serif;
+    color            : #444;
+    background-color : #eee;
+      overflow-y: scroll;
+  }
+  a { text-decoration : none; cursor : default;}
+    a:link, a:visited { color : inherit; }
+    a:hover { text-decoration: none; }
+
+  strong {
+    font-weight : 800;
+    color       : #000;
+  }
+/** End standard selectors */
+
+/** Begin app nameappce selectors */
+  #app {
+    position : absolute;
+    top      : 0;
+    left     : 0;
+    right    : 0;
+    /*overflow   : hidden;*/
+    border-radius    : 0 0 0 0;
+  }
+/** End app nameappce selectors */
+
+/** Begin utility selectors */
+  .app-x-select {}
+  .app-x-clearfloat {
+    height     : 0      !important;
+    float      : none   !important;
+    visibility : hidden !important;
+    clear      : both   !important;
+  }
+/** End utility selectors */
+@media print
+{
+    .app-facture {page-break-inside:auto}
+    .app-facture h1{
+    color : #eee;
+    background : blue;
+}
+}
+
+.app-facture h1{
+    color : #eee;
+    background : blue;
+}
+
+
+.app-flash {
+    position: fixed;
+    top: 40px;
+    left: 0;
+    right: 0;
+    text-align: center;
+}
+
+.app-flash span {
+    padding: 10px;
+    background: #ccc;
+    color: #000000;
+}
+
+
+.icons {
+  list-style: none;
+  display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-direction: row;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    -webkit-flex-wrap: wrap;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    -webkit-justify-content: flex-start;
+    -ms-flex-pack: start;
+    justify-content: flex-start;
+    -webkit-align-content: stretch;
+    -ms-flex-line-pack: stretch;
+    align-content: stretch;
+    -webkit-align-items: flex-start;
+    -ms-flex-align: start;
+    align-items: flex-start;
+  max-width: 1024px;
+  margin: 0 auto;
+    padding: 0;
+}
+
+[class^="mdl2-"]::before, 
+[class*="mdl2-"]::before {
+    font-size: 17px !important;
+}
+
+.icons-icon {
+    /* font-size: 16px; */
+}
+
+.icons-tag {
+    font-size: 0.8em;
+    display: none;
+}
+
+.icons-item--touched {
+    /* background: #F1F1F1; */
+}
+
+.icons-item--touched .icons-tag {
+    background: #F1F1F1;
+    display: block;
+    position: absolute;
+    padding: 10px;
+}
+

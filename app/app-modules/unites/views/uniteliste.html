@@ -1,0 +1,83 @@
+﻿<div class="app-patient">
+
+    <div class="app-patient-bar">
+        <div class="app-patient-bar-title">
+            <h1>Unites</h1>
+        </div>
+        <div class="app-page-action" sticky-nav>
+            <ul>
+                <li class="icons-item">
+                    <a href="#/uniteedit/0" title="Ajouter">
+                        <div class="icons-icon mdl2-add"></div>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" title="Actualiser">
+                        <div class="icons-icon mdl2-refresh"></div>
+                    </a>
+                </li>
+                <li ng-show="vm.selectedIndex > 0">
+                    <a href="#/uniteedit/{{vm.selectedIndex}}" title="Modifier">
+                        <div class="icons-icon mdl2-edit"></div>
+                    </a>
+                </li>
+                <li ng-click="vm.toggleSeachForm()">
+                    <div class="icons-icon mdl2-find-legacy"  title="Rechercher"></div>
+                </li>
+            </ul>
+        </div>
+        <div class="app-page-action-paging">
+            <span>de {{vm.of}} à {{vm.to}} / {{vm.TotalCount}}</span>
+            <ul>
+                <li class="icons-item">
+                    <button ng-click="vm.navigateTo('prev')" ng-disabled="vm.of == 1">
+                        <div class="icons-icon mdl2-arrow-HTML-legacy"></div>
+                    </button>
+                </li>
+                <li class="icons-item">
+                    <button ng-click="vm.navigateTo('next')" ng-disabled="vm.to >= vm.TotalCount || vm.TotalCount == 0">
+                        <div class="icons-icon mdl2-arrow-HTML-mirrored-legacy"></div>
+                    </button>
+                </li>
+            </ul>
+        </div>
+    </div>
+    
+    <div class="app-patient-bar-action" ng-show="vm.showSearchForm == true">
+        <form name="searchForm" novalidate>
+            <input class="searchBox" type="text"
+                   ng-model="vm.searchText"
+                   ng-change="vm.searchTextChanged()"
+                   placeholder="Rechercher par nom" />
+            <button ng-click="vm.lookUp()">
+                <span class="icon ion-android-search"></span>
+            </button>
+        </form>
+    </div>
+    
+    <div class="app-patient-main">
+        <div class="app-patient-main-item"
+             ng-show="vm.filteredCount == 0">
+            <h2>Aucun unite enregistré</h2>
+        </div>
+        <div id="clientList" class="app-patient-main-item" ng-show="vm.filteredCount > 0"
+             ng-repeat="p in vm.filteredUnite">
+            <!--<item-list patient="p"></item-list>-->
+
+
+            <div class="item" ng-class="{ active : vm.selectedIndex == p.id }" ng-click="vm.itemClicked(p.id)">
+                <span class="item-nom">
+                    {{p.uniteLib}}
+                </span>
+                <span class="item-date">
+                    <span am-time-ago="p.insertDate"></span>
+                    <!--<span>{{p.insertDate | amDurationFormat : 'minute' }}</span>-->
+                </span>
+            </div>
+
+
+        </div>
+    </div>
+    <div id="patientBox"></div>
+    <div class="app-patient-foot"></div>
+</div>

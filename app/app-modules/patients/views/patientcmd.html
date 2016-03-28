@@ -1,0 +1,253 @@
+﻿<div class="app-patient">
+
+    <div class="app-patient-bar">
+        <div class="app-patient-bar-title">
+            <h1>{{vm.title}} une commande</h1>
+        </div>
+        <div class="app-page-action" sticky-nav>
+            <ul>
+                <li>
+                    <a href="#/patient">
+                        <div class="icons-icon mdl2-arrow-HTML-legacy"></div>
+                    </a>
+                </li>
+                <li>
+                    <a href="#/patient/{{vm.patient.id}}">
+                        <div class="icons-icon mdl2-view"></div>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="app-panel">
+        <div class="app-panel-main">
+            <form name="commandeForm" ng-submit="vm.saveCommande()" novalidate>
+                <div class="aq">
+                    <p>Les champs avec (*) sont requis</p>
+                </div>
+                <div class="message" ng-show="vm.updateStatus">
+                    <div class="label label-success">
+                        <span class="glyphicon glyphicon-thumbs-up icon-white"></span>
+                        <span>{{ vm.message }}</span>
+                    </div>
+                </div>
+                <div class="aq">
+                    <label>Type de patient : </label>
+                    <select name="typePatientId"
+                            ng-change="vm.updateSociete(vm.commande.typePatientId)"
+                            ng-model="vm.commande.typePatientId"
+                            ng-options="tp.id as tp.typePatientLib for tp in vm.typePatients"
+                            required>
+                        <option value="">Type de patient</option>
+                    </select>
+                    <div class="errorMessage" ng-show="commandeForm.typePatientId.$dirty || commandeForm.typePatientId.$invalid && vm.submitted">
+                        <small class="error" ng-show="commandeForm.typePatientId.$error.required">
+                            Ce champs est requis !
+                        </small>
+                    </div>
+                </div>
+
+                <div class="aq">
+                    <label>liste des sociétés : </label>
+                    <select name="societeId"
+                            ng-change="vm.updateContrat(vm.commande.societeId)"
+                            ng-model="vm.commande.societeId"
+                            ng-options="s.id as s.societeLib for s in vm.filteredSocietes"
+                            required>
+                        <option value="">Société</option>
+                    </select>
+                    <div class="errorMessage" ng-show="commandeForm.societeId.$dirty || commandeForm.societeId.$invalid && vm.submitted">
+                        <small class="error" ng-show="commandeForm.societeId.$error.required">
+                            Ce champs est requis !
+                        </small>
+                    </div>
+                </div>
+
+                <div class="aq">
+                    <label>Contrat : </label>
+                    <select name="contratId"
+                            ng-model="vm.commande.contratId"
+                            ng-options="c.id as c.typeContratLib for c in vm.contrats"
+                            required>
+                        <option value="">Contrat</option>
+                    </select>
+                    <div class="errorMessage" ng-show="commandeForm.contratId.$dirty || commandeForm.contratId.$invalid && vm.submitted">
+                        <small class="error" ng-show="commandeForm.contratId.$error.required">
+                            Ce champs est requis !
+                        </small>
+                    </div>
+                </div>
+
+                <div class="aq">
+                    <label>N° Société / Assurance : </label>
+                    <input name="numeroAssurance" type="text" ng-model="vm.commande.numeroAssurance" />
+                    <div class="errorMessage" ng-show="commandeForm.numeroAssurance.$dirty || commandeForm.numeroAssurance.$invalid && vm.submitted">
+                        <small class="error" ng-show="commandeForm.numeroAssurance.$error.required">
+                            Ce champs est requis !
+                        </small>
+                    </div>
+                </div>
+
+                <div class="aq">
+                    <label>Nom du medecin : </label>
+                    <input name="nomMedecin" type="text" ng-model="vm.commande.nomMedecin" required />
+                    <div class="errorMessage" ng-show="commandeForm.nomMedecin.$dirty || commandeForm.nomMedecin.$invalid && vm.submitted">
+                        <small class="error" ng-show="commandeForm.nomMedecin.$error.required">
+                            Ce champs est requis !
+                        </small>
+                    </div>
+                </div>
+
+                <div class="aq">
+                    <label>Telephone du medecin : </label>
+                    <input name="telephoneMedecin" type="text" ng-model="vm.commande.telephoneMedecin" pattern="([0-9]{3})" maxlength="8" required />
+                    <div class="errorMessage" ng-show="commandeForm.telephoneMedecin.$dirty || commandeForm.telephoneMedecin.$invalid && vm.submitted">
+                        <small class="error" ng-show="commandeForm.telephoneMedecin.$error.required">
+                            Ce champs est requis !
+                        </small>
+                    </div>
+                </div>
+
+                <div class="aq">
+                    <label>Service Medecin : </label>
+                    <select name="serviceMedecinId"
+                            ng-model="vm.commande.serviceMedecinId"
+                            ng-options="s.id as s.serviceMedecinLib for s in vm.serviceMedecins"
+                            required>
+                        <option value="">Service Medecin</option>
+                    </select>
+                    <div class="errorMessage" ng-show="commandeForm.serviceMedecinId.$dirty || commandeForm.serviceMedecinId.$invalid && vm.submitted">
+                        <small class="error" ng-show="commandeForm.serviceMedecinId.$error.required">
+                            Ce champs est requis !
+                        </small>
+                    </div>
+                </div>
+
+                <div class="aq">
+                    <label>Etablissement Sanitaire : </label>
+                    <select name="etablissementSanitaireId"
+                            ng-model="vm.commande.etablissementSanitaireId"
+                            ng-options="th.id as th.etablissementSanitaireLib for th in vm.etablissementSanitaire"
+                            required>
+                        <option value="">Etablissement Sanitaire</option>
+                    </select>
+                    <div class="errorMessage" ng-show="commandeForm.etablissementSanitaireId.$dirty || commandeForm.etablissementSanitaireId.$invalid && vm.submitted">
+                        <small class="error" ng-show="commandeForm.etablissementSanitaireId.$error.required">
+                            Ce champs est requis !
+                        </small>
+                    </div>
+                </div>
+
+                <div class="aq">
+                    <label>Caisse :</label>
+                    <select name="userAccountId"
+                            ng-model="vm.commande.ownerId"
+                            ng-options="u.id as u.fullName for u in vm.caisses"
+                            required>
+                        <option value="">CAISSE</option>
+                    </select>
+                    <div class="errorMessage" ng-show="commandeForm.userAccountId.$dirty || commandeForm.userAccountId.$invalid && vm.submitted">
+                        <small class="error" ng-show="commandeForm.userAccountId.$error.required">
+                            Ce champs est requis !
+                        </small>
+                    </div>
+                </div>
+
+
+            <div ng-show="vm.commande.contratId > 0" class="app-analyse-box">
+                    <div class="app-box-main">
+                        <div class="app-commande-analyse">
+                            <div class="analyse-form" name="analyseForm">
+                                <autocomplete attr-class="textInput"
+                                              click-activation=true
+                                              on-type="vm.searchAnalyse"
+                                              attr-placeholder="Entrer le nom de l'analyse"
+                                              ng-model="vm.analyse.analyseLib"
+                                              data="vm.analyses"
+                                              on-select="vm.setAnalyse()"
+                                              autocomplete-required>
+                                </autocomplete>
+                                <select name="employeeId"
+                                        ng-model="vm.analyse.employeeId"
+                                        ng-options="e.id as e.fullname for e in vm.employees">
+                                    <option value="">Choisir medecin</option>
+                                </select>
+                                <button ng-show="vm.analyse.analyseId >0"
+                                        type="button"
+                                        ng-click="vm.saveCommandeAnalyse()">
+                                    Ajouter
+                                </button>
+                            </div>
+                        </div>
+                        <table class="table table-hover table-striped table-condensed table-bordered ordersTable">
+                            <thead>
+                                <tr>
+                                    <th colspan="2">
+                                        <strong>Total analyse : {{vm.commandeAnalyse.length}}</strong>
+                                    </th>
+                                    <th colspan="2">
+                                        <strong>Total B : {{ vm.commande.totalNbreB }}</strong>
+                                    </th>
+                                    <th colspan="4">
+                                        <strong>Montant Total : {{ vm.commande.totalNetAPayer }}</strong>
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <th data-ng-click="vm.setOrder('product')">Analyse</th>
+                                    <th data-ng-click="vm.setOrder('product')">Forfait</th>
+                                    <th data-ng-click="vm.setOrder('date')">Rédution autorisé par (%)</th>
+                                    <th data-ng-click="vm.setOrder('date')">Net à payé</th>
+                                    <th data-ng-click="vm.setOrder('quantity')">Nbre B</th>
+                                    <th data-ng-click="vm.setOrder('price')">Date de retrait</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr data-ng-hide="commandeAnalyse || vm.commandeAnalyse.length > 0" class="error">
+                                    <td colspan="8">
+                                        <div class="text-center">
+                                            <strong>Pas de donneé</strong>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr data-ng-repeat="commandeAnalyse in vm.commandeAnalyse">
+                                    <td>
+                                        {{ commandeAnalyse.analyseLib }}
+                                    </td>
+                                    <td>
+                                        {{ commandeAnalyse.forfait }}
+                                    </td>
+                                    <td>
+                                        {{ commandeAnalyse.medecinFullName + ' ( ' + commandeAnalyse.tauxReduction +' %)'}}
+                                    </td>
+                                    <td>
+                                        {{ commandeAnalyse.netAPayer }}
+                                    </td>
+                                    <td>
+                                        {{ commandeAnalyse.nbreB }}
+                                    </td>
+                                    <td>
+                                        {{ commandeAnalyse.dateRetrait | amDateFormat:'dddd, MMMM Do YYYY'}}
+                                    </td>
+                                    <td>
+                                        <button ng-click="vm.delAnalyseRow(commandeAnalyse.id)">
+                                            <span class="ion-android-close"></span>
+                                        </button>
+                                    </td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="aq">
+                    <button type="submit"
+                            ng-disabled="vm.sending == true || vm.nbreAnalyse == 0">
+                        {{vm.buttonText}}
+                    </button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>

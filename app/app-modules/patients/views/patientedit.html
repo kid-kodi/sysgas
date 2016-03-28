@@ -1,0 +1,188 @@
+﻿<div class="app-patient">
+    <!-- <div class="app-patient-bar">
+        <div class="app-patient-bar-title">
+            <h1>{{vm.title}} d'un patient</h1>
+        </div>
+    </div>
+    <div class="app-page-action" sticky-nav>
+        <div class="app-page-action-button">
+            <a href="#/patient">
+                <span class="icon ion-arrow-left-c"></span>
+                <span class="text">Retour à la liste</span>
+            </a>
+        </div>
+    </div> -->
+    <div class="app-patient-bar" sticky-nav>
+        <div class="app-patient-bar-title">
+            <h1>{{vm.title}} d'un patient</h1>
+        </div>
+        <div class="app-page-action">
+            <ul>
+                <li>
+                    <a href="#/patient" title="liste des patients">
+                        <div class="icons-icon mdl2-arrow-HTML-legacy"></div>
+                    </a>
+                </li>
+                <li>
+                    <a href="#/patient/{{vm.patient.id}}" title="Voir commandes">
+                        <div class="icons-icon mdl2-view"></div>
+                    </a>
+                </li>
+                <li>
+                    <a href="#/patientcmd/{{vm.patient.id}}/0" title="Ajouter commande">
+                        <div class="icons-icon mdl2-new-folder"></div>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="app-panel">
+        <div class="app-panel-main">
+            <form name="patientForm" 
+                  ng-submit="vm.savePatient()" novalidate>
+                <div class="aq">
+                    <p>Tous les champs en rouge doivent être renseigné</p>
+                </div>
+                <div class="aq">
+                    <label>Nom : </label>
+                    <input type="text" name="nom" ng-model="vm.patient.nom" ng-minlength="3" required />
+                    <div class="errorMessage" 
+                         ng-show="patientForm.nom.$dirty || patientForm.nom.$invalid && vm.submitted">
+                        <small class="error" ng-show="patientForm.nom.$error.required">
+                            Ce champs est requis !
+                        </small>
+                        <small class="error" ng-show="patientForm.nom.$error.minlength">
+                            Minimum 3 caractères !
+                        </small>
+                    </div>
+                </div>
+                <div class="aq">
+                    <label>Prénom : </label>
+                    <input type="text" name="prenom" ng-model="vm.patient.prenom" ng-minlength="3" required />
+                    <div class="errorMessage" ng-show="patientForm.prenom.$dirty || patientForm.prenom.$invalid && vm.submitted">
+                        <small class="error" ng-show="patientForm.prenom.$error.required">
+                            Ce champs est requis !
+                        </small>
+                        <small class="error" ng-show="patientForm.prenom.$error.minlength">
+                            Minimum 3 caractères !
+                        </small>
+                    </div>
+                </div>
+                <div class="aq date-retrait">
+                    <label>Date de naissance :</label>
+                    <select name="jourNaissance"
+                            ng-model="vm.patient.jourNaissance"
+                            ng-options="jour.jourNumber as jour.jourNumber for jour in vm.jours"
+                            required >
+                        <option value="">JOUR</option>
+                    </select>
+                    <select name="moisNaissance"
+                            ng-model="vm.patient.moisNaissance"
+                            ng-options="mois.moisNumber as mois.moisLib for mois in vm.mois"
+                            required >
+                        <option value="">MOIS</option>
+                    </select>
+                    <select name="anneeNaissance"
+                            ng-model="vm.patient.anneeNaissance"
+                            ng-options="annee.anneeLib as annee.anneeLib for annee in vm.annees"
+                            required >
+                        <option value="">ANNEE</option>
+                    </select>
+                    <div class="errorMessage" ng-show="patientForm.jourNaissance.$dirty || patientForm.jourNaissance.$invalid && vm.submitted">
+                        <small class="error" ng-show="patientForm.jourNaissance.$error.required">
+                            Ce champs est requis !
+                        </small>
+                    </div>
+                    <div class="errorMessage" ng-show="patientForm.moisNaissance.$dirty || patientForm.moisNaissance.$invalid && vm.submitted">
+                        <small class="error" ng-show="patientForm.moisNaissance.$error.required">
+                            Ce champs est requis !
+                        </small>
+                    </div>
+                    <div class="errorMessage" ng-show="patientForm.anneeNaissance.$dirty || patientForm.anneeNaissance.$invalid && vm.submitted">
+                        <small class="error" ng-show="patientForm.anneeNaissance.$error.required">
+                            Ce champs est requis !
+                        </small>
+                    </div>
+                </div>
+                <div class="aq" ng-init="vm.patient.genre=1">
+                    <label>Genre:</label>
+                    <div class="radio">
+                        <label class="radio">
+                            <input type="radio" ng-model="vm.patient.genre" name="genre" value="1" ng-checked="1" />
+                            Masculin
+                        </label>
+                    </div>
+                    <div class="radio">
+                        <label class="radio">
+                            <input type="radio" ng-model="vm.patient.genre" name="genre" value="0" />
+                            Feminin
+                        </label>
+                    </div>
+                </div>
+                <div class="aq">
+                    <label>Email Adresse :</label>
+                    <input type="email" name="email" ng-model="vm.patient.email" />
+                </div>
+                <div class="aq">
+                    <label>Numéro de téléphone :</label>
+                    <input type="text" name="telephone" ng-model="vm.patient.telephone" pattern="([0-9]{3})" maxlength="8" required />
+                    <!-- Show error if touched and unique is in error -->
+                    <div class="errorMessage" ng-show="patientForm.telephone.$dirty || patientForm.telephone.$invalid && vm.submitted">
+                        <small class="error" ng-show="patientForm.telephone.$error.required">
+                            Ce champs est requis !
+                        </small>
+                    </div>
+                </div>
+                <div class="aq">
+                    <label>Nationalité :</label>
+                    <select name="paysId"
+                            ng-model="vm.patient.paysId"
+                            ng-options="p.id as p.paysLib for p in vm.pays"
+                            required >
+                        <option value="">Choisir un pays</option>
+                    </select>
+                    <div class="errorMessage" ng-show="patientForm.paysId.$dirty || patientForm.paysId.$invalid && vm.submitted">
+                        <small class="error" ng-show="patientForm.paysId.$error.required">
+                            Ce champs est requis !
+                        </small>
+                    </div>
+                </div>
+
+                <div class="aq">
+                    <label>Type de pièce : </label>
+                    <select name="typePieceFournitId"
+                            ng-model="vm.patient.typePieceFournitId"
+                            ng-options="tp.id as tp.typePieceFournitLib for tp in vm.typePieceFournits" 
+                            required >
+                        <option value="">Type de pièce</option>
+                    </select>
+                    <div class="errorMessage" ng-show="patientForm.typePieceFournitId.$dirty || patientForm.typePieceFournitId.$invalid && vm.submitted">
+                        <small class="error" ng-show="patientForm.typePieceFournitId.$error.required">
+                            Ce champs est requis !
+                        </small>
+                    </div>
+                </div>
+                <div class="aq">
+                    <label>Numéro de la pièce : </label>
+                    <input type="text" ng-model="vm.patient.numeroPiece" />
+                </div>
+                <div class="aq">
+                    <label class="col-md-2">Adresse:</label>
+                    <input type="text" name="adresse" ng-model="vm.patient.adresse" />
+                </div>
+                <div class="aq">
+                    <button type="submit" ng-disabled="vm.sending == true">
+                        {{vm.buttonText}}
+                    </button>
+                </div>
+                <div class="message" ng-show="vm.updateStatus">
+                    <div class="label label-success">
+                        <span class="glyphicon glyphicon-thumbs-up icon-white"></span>
+                        <span>{{ vm.message }}</span>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="app-panel-foot"></div>
+    </div>
+</div>

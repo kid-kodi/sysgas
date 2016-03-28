@@ -1,0 +1,82 @@
+﻿<div class="app-details" ng-show="vm.init == true">
+    <div class="app-details-card">
+        <div class="app-details-card-info">
+            <div class="app-details-card-info-avtr">
+                <img src="../app/assets/img/man.png" ng-show="vm.patient.genre == '1'" />
+                <img src="../app/assets/img/woman.png" ng-show="vm.patient.genre == '0'" />
+            </div>
+            <div class="app-details-card-info-nom">
+                <h1>{{vm.patient.nom + ' ' + vm.patient.prenom}}</h1>
+                <h3>
+                    <span>Né le </span>
+                    <span>{{vm.patient.moisNaissance + '-' + vm.patient.jourNaissance + '-' + vm.patient.anneeNaissance | amDateFormat:'Do MMMM YYYY'}}</span>
+                </h3>
+                <h3>
+                    <span class="icon ion-ios7-telephone"></span>
+                    <span>{{vm.patient.telephone}} </span>
+                </h3>
+                <h3>
+                    <span class="icon ion-calendar"></span>
+                    <span>Enregistré le {{vm.patient.insertDate | amDateFormat:'Do MMMM YYYY'}}</span>
+                </h3>
+            </div>
+        </div>
+    </div>
+
+    <div class="app-page-action">
+        <div class="app-page-action-button">
+            <a href="#/patient">
+                <span class="icon ion-arrow-left-c"></span>
+                <span class="text">Retour à la liste</span>
+            </a>
+            <a href="#/patientcmd/{{vm.patient.id}}/0">
+                <span class="icon ion-ios7-cart"></span>
+                <span class="text">Nouvelle commande</span>
+            </a>
+        </div>
+    </div>
+
+    <div class="app-detail-list">
+        <div class="app-detail-list-cont">
+            <div class="filters">
+                <div class="filters-item active" ng-click="vm.filterCommande(1)">
+                    <span class="icon ion-android-clock"></span>
+                    <span>en attente</span>
+                    <span>{{vm.nbreAttente}}</span>
+                </div>
+                <div class="filters-item" ng-click="vm.filterCommande(2)">
+                    <span class="icon ion-android-promotion"></span>
+                    <span>reglé</span>
+                    <span>{{vm.nbreRegle}}</span>
+                </div>
+                <div class="filters-item" ng-click="vm.filterCommande(3)">
+                    <span class="icon ion-alert"></span>
+                    <span>annulé</span>
+                    <span>{{vm.nbreAnnule}}</span>
+                </div>
+            </div>
+            
+            <div class="item" data-ng-repeat="commande in vm.filteredCommandes">
+                <div class="fullname">{{vm.patient.nom + ' ' + vm.patient.prenom}}</div>
+                <div class="societe">{{commande.societeLib}}</div>
+                <div class="netpaye">{{commande.totalNetAPayer}} F.CFA</div>
+                <div class="istatus">{{commande.currentStateLib}}</div>
+                <div class="createdby">{{commande.submitterNom}}</div>
+                <div class="sendto">{{commande.ownerNom}}</div>
+                <div class="idate"><span am-time-ago="commande.insertDate"></span></div>
+                <div class="action" ng-hide="commande.currentStateId > 1">
+                    <a href="#/patientcmd/{{vm.patient.id}}/{{commande.id}}">
+                        <span class="icon ion-edit"></span>
+                        <span class="text">modifier</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div ng-show="vm.commandes.length == 0">
+        <div class="app-box empty">
+            <h1>Aucune commande enregistrée</h1>
+        </div>
+    </div>
+</div>

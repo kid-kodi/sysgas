@@ -1,0 +1,79 @@
+﻿<div class="app-patient">
+    <div class="app-patient-bar" sticky-nav>
+        <div class="app-patient-bar-title">
+            <h1>{{vm.title}} d'un laboratoire</h1>
+        </div>
+        <div class="app-page-action">
+            <ul>
+                <li>
+                    <a href="#/laboratoire" title="Retour à la liste">
+                        <div class="icons-icon mdl2-arrow-HTML-legacy"></div>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="app-panel">
+        <div class="app-panel-main">
+            <form name="laboratoireForm" novalidate>
+                <div class="aq">
+                    <p>Les champs avec (*) sont requis</p>
+                </div>
+                <div class="aq">
+                    <label>Choix du departement :</label>
+                    <select name="departementId"
+                            ng-model="vm.departementId"
+                            ng-options="dept.id as dept.departementLib for dept in vm.departements"
+                            ng-change="vm.onDeptChange()"
+                            required ng-focus>
+                        <option value="">Departement</option>
+                    </select>
+                    <div class="errorMessage" ng-show="laboratoireForm.departementId.$invalid && laboratoireForm.departementId.$focused">
+                        <small class="error" ng-show="laboratoireForm.departementId.$error.required">
+                            Ce champs est requis !
+                        </small>
+                    </div>
+                </div>
+                <div class="aq">
+                    <label>Choix de l'unité :</label>
+                    <select name="uniteId"
+                            ng-model="vm.laboratoire.uniteId"
+                            ng-options="u.id as u.uniteLib for u in vm.uniteList"
+                            required ng-focus>
+                        <option value="">Unite</option>
+                    </select>
+                    <div class="errorMessage" ng-show="laboratoireForm.uniteId.$invalid && laboratoireForm.uniteId.$focused">
+                        <small class="error" ng-show="laboratoireForm.uniteId.$error.required">
+                            Ce champs est requis !
+                        </small>
+                    </div>
+                </div>
+                <div class="aq">
+                    <label>Nom : </label>
+                    <input type="text" name="name" ng-model="vm.laboratoire.laboratoireLib" ng-minlength="3" required ng-focus/>
+                    <div class="errorMessage" ng-show="laboratoireForm.name.$invalid && laboratoireForm.name.$focused">
+                        <small class="error" ng-show="laboratoireForm.name.$error.required">
+                            Ce champs est requis !
+                        </small>
+                        <small class="error" ng-show="laboratoireForm.name.$error.minlength">
+                            Minimum 3 caractères !
+                        </small>
+                    </div>
+                </div>
+                <div class="aq">
+                    <button type="submit" ng-click="vm.saveLaboratoire()"
+                            ng-disabled="laboratoireForm.$invalid">
+                        {{vm.buttonText}}
+                    </button>
+                </div>
+                <div class="message" ng-show="vm.updateStatus">
+                    <div class="label label-success">
+                        <span class="glyphicon glyphicon-thumbs-up icon-white"></span>
+                        <span>{{ vm.message }}</span>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="app-panel-foot"></div>
+    </div>
+</div>

@@ -1,0 +1,60 @@
+﻿<div class="app-patient">
+
+    <div class="app-patient-bar" sticky-nav>
+        <div class="app-patient-bar-title">
+            <h1>{{vm.title}} d'un departement</h1>
+        </div>
+        <div class="app-page-action">
+            <ul>
+                <li>
+                    <a href="#/departement" title="Retour à la liste">
+                        <div class="icons-icon mdl2-arrow-HTML-legacy"></div>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="app-panel">
+        <div class="app-panel-main">
+            <form name="departementForm" novalidate>
+                <div class="aq">
+                    <p>Les champs avec (*) sont requis</p>
+                </div>
+                <div class="aq">
+                    <label>Nom : </label>
+                    <input type="text" name="name" ng-model="vm.departementLib" ng-minlength="3" required ng-focus/>
+                    <div class="errorMessage" ng-show="departementForm.name.$invalid && departementForm.name.$focused">
+                        <small class="error" ng-show="departementForm.name.$error.required">
+                            Ce champs est requis !
+                        </small>
+                        <small class="error" ng-show="departementForm.name.$error.minlength">
+                            Minimum 3 caractères !
+                        </small>
+                    </div>
+                </div>
+                <div class="aq">
+                    <label>Reference : </label>
+                    <input type="text" name="reference" ng-model="vm.reference" ng-minlength="1" ng-focus/>
+                    <div class="errorMessage" ng-show="departementForm.reference.$invalid && departementForm.reference.$focused">
+                        <small class="error" ng-show="departementForm.name.$error.minlength">
+                            Minimum 3 caractères !
+                        </small>
+                    </div>
+                </div>
+                <div class="aq">
+                    <button type="submit" ng-click="vm.saveDepartement()"
+                            ng-disabled="departementForm.$invalid">
+                        {{vm.buttonText}}
+                    </button>
+                </div>
+                <div class="message" ng-show="vm.updateStatus">
+                    <div class="label label-success">
+                        <span class="glyphicon glyphicon-thumbs-up icon-white"></span>
+                        <span>{{ vm.message }}</span>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="app-panel-foot"></div>
+    </div>
+</div>

@@ -1,0 +1,128 @@
+﻿
+
+
+
+.app-form {
+    /* width: 600px; */
+    /* z-index: 99; */
+    margin: -5px auto 20px auto;
+    border: 1px solid #ccc;
+    background: #fff;
+}
+
+.app-form-title {
+    padding : 10px 20px;
+}
+
+.app-form-head {
+    height: 40px;
+    line-height: 40px;
+    background: #eee;
+    border-bottom: 1px solid #ccc;
+}
+
+.block-info{
+    border-bottom : 1px solid #4ea6bc;
+    margin: 20px 15px;
+    padding: 10px 0;
+}
+
+.block-info span{
+    display : inline-block;
+    vertical-align : middle;
+    color: #4ea6bc;
+    font-weight : bold;
+    font-size : 16px;
+}
+
+.block-info .bullet-a{
+    border : 1px solid #4ea6bc;
+    border-radius : 50%;
+    width : 30px;
+    height : 30px;
+    line-height : 30px;
+    text-align : center;
+    margin-right : 10px;
+}
+
+
+.form-msg{
+  position: fixed;
+  z-index: 99;
+  top: 5px;
+  left: 0;
+  right: 0;
+  background: red;
+  color: #fff;
+  font-weight: bold;
+  font-size: 16px;
+  margin:auto;
+  width: 500px;
+  text-align: center;
+  height: 50px;
+  line-height: 50px;
+  border-radius: 3px;
+}
+
+.app-form-head-action {
+    float : right;
+    padding : 0 10px;
+}
+
+
+    .app-form-head span {
+        padding: 0 12px;
+    }
+
+        .app-form-head span.nom {
+            float: left;
+        }
+
+        .app-form-head span.close {
+            float: right;
+        }
+
+        .app-form-head span.date {
+            float: right;
+        }
+
+
+
+.app-form-cont {
+    display: inline-block;
+    width: 100%;
+}
+
+.app-form-foot {
+    height: 40px;
+    background: #eee;
+    line-height: 40px;
+    border-top: 1px solid #ccc;
+}
+
+    .app-form-foot button {
+        margin: 0 0px 0 10px;
+        padding: 3px 7px;
+    }
+
+label {
+    display: block;
+}
+
+.block {
+    display : flex;
+    flex-direction : column;
+    padding: 10px;
+    /* width: 50%; */
+}
+
+.block-cont{
+    display : flex;
+    flex-direction : row;
+    align-items: flex-start;
+}
+
+.block-cont-item{
+    width : 50%;
+    margin: 50px 5px 20px 5px;
+}

@@ -1,0 +1,548 @@
+﻿form {
+    display: block;
+    width: 300px;
+    margin: auto;
+}
+
+form.inline {
+    width: 100%;
+    margin: auto !important;
+    padding: 10px !important;
+    border-bottom: 1px solid #eee;
+}
+
+form.inline label {
+    display: inline-block;
+    vertical-align: top;
+    width: 100%;
+    font-size: 16px;
+}
+
+form.inline .textInput {
+    display: inline-block;
+    vertical-align: top;
+    height: 34px;
+    width: 200px !important;
+}
+ 
+form.inline input[type=text], 
+form.inline input[type=password],
+form.inline input[type=email],
+form.inline input[type=number] {
+    /*padding: 5px 5px;*/
+    font-size: 16px;
+    border-right: 2px solid #eee;
+    border-bottom: 2px solid #eee;
+    border-top: 2px solid #eee;
+    width: 200px !important;
+    display: inline-block;
+    vertical-align: top;
+    height: 34px;
+    padding: 6px 12px;
+    line-height: 1.42857143;
+    color: #555555;
+    background-color: #ffffff;
+    background-image: none;
+    border: 1px solid #cccccc;
+    border-radius: 4px;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+    -webkit-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+    -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+    transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+}
+
+form.inline input.searchBar{
+    width: 100% !important;
+}
+
+form.inline select {
+    display: inline-block;
+    vertical-align: top;
+    height: 34px;
+    padding: 6px 12px;
+    line-height: 1.42857143;
+    color: #555555;
+    background-color: #ffffff;
+    background-image: none;
+    border: 1px solid #cccccc;
+    border-radius: 4px;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+    -webkit-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+    -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+    transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+    font-size: 16px;
+}
+
+form .aq {
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+    flex-flow: column;
+    width: 350px;
+    margin: auto;
+    /* text-align: left; */
+    padding: 13px 0;
+}
+
+form .aq_b {
+    position: relative;
+    display: flex;
+    align-items: center;
+    flex-flow: row;
+    width: 350px;
+    margin: auto;
+    /* text-align: left; */
+    padding: 13px 0;
+}
+
+    form .aq_b *{
+        order: 1;
+    }
+
+form label {
+    display: block;
+    width: 100%;
+    font-size: 16px;
+}
+form input[type=text], 
+form input[type=password],
+form input[type=email],
+form input[type=number] {
+    /*padding: 5px 5px;*/
+    font-size: 16px;
+    border-right: 2px solid #eee;
+    border-bottom: 2px solid #eee;
+    border-top: 2px solid #eee;
+
+    display: block;
+    width: 100%;
+    height: 34px;
+    padding: 6px 12px;
+    line-height: 1.42857143;
+    color: #555555;
+    background-color: #ffffff;
+    background-image: none;
+    border: 1px solid #cccccc;
+    border-radius: 4px;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+    -webkit-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+    -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+    transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+}
+
+form select {
+    height: 34px;
+    padding: 6px 12px;
+    line-height: 1.42857143;
+    color: #555555;
+    background-color: #ffffff;
+    background-image: none;
+    border: 1px solid #cccccc;
+    border-radius: 4px;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+    -webkit-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+    -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+    transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+    font-size: 16px;
+}
+
+form input[type=radio]{}
+form input[type=submit]{}
+
+input.ng-invalid, select.ng-invalid, input.ng-invalid-required, select.ng-invalid-required { border-left: 2px solid #E03930; }
+
+input.ng-valid, select.ng-valid, input.ng-valid-required, select.ng-valid-required { border-left: 2px solid #57A83F; }
+
+.errorMessage {
+    position: absolute;
+    padding: 5px;
+    top: 25px;
+    height: 32px;
+    width: 100%;
+    left: 400px;
+}
+
+.errorMessage small{
+    padding: 5px 10px;
+    border: 1px solid #E03930;
+    color: #E03930;
+}
+
+
+form[name=loginForm]{
+    width: 100%;
+    margin: auto;
+}
+
+form[name=loginForm] input[type=text], 
+form[name=loginForm] input[type=email] {
+    /*padding: 5px 5px;*/
+    font-size: 18px;
+    width: 100% !important;
+    display: inline-block;
+    vertical-align: top;
+    height: 45px;
+    padding: 6px 12px;
+    line-height: 1.42857143;
+    color: #555555;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    background: #fff;
+    border: 1px solid;
+    border-bottom: 0;
+    outline: 0;
+    border-color: #e5e6e9 #dfe0e4 #d0d1d5;
+    box-shadow: none;
+}
+
+form[name=loginForm] input[type=password]{
+    /*padding: 5px 5px;*/
+    outline: 0;
+    font-size: 18px;
+    width: 100% !important;
+    display: inline-block;
+    vertical-align: top;
+    height: 45px;
+    padding: 6px 12px;
+    line-height: 1.42857143;
+    color: #555555;
+    background-color: #ffffff;
+    
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+    
+    background: #fff;
+    border: 1px solid;
+    border-color: #e5e6e9 #dfe0e4 #d0d1d5;
+    box-shadow: none;
+}
+
+
+
+form .message {
+    position: fixed;
+    top: 50px;
+    right: 15px;
+    background: #E03930;
+    color: #fff;
+    padding: 10px 20px;
+}
+button, a.button {
+    text-align: center;
+    color: #444;
+    font-size: 14px;
+    font-weight: 700;
+    height: 25px;
+    padding: 0 8px;
+    line-height: 25px;
+    -moz-border-radius: 2px;
+    -webkit-border-radius: 2px;
+    border-radius: 2px;
+    -o-transition: all 0.218s;
+    -moz-transition: all 0.218s;
+    -webkit-transition: all 0.218s;
+    transition: all 0.218s;
+    border: 1px solid #dcdcdc;
+    background-color: #f5f5f5;
+    background-image: -webkit-linear-gradient(top, #f5f5f5, #f1f1f1);
+    background-image: -moz-linear-gradient(top, #f5f5f5, #f1f1f1);
+    background-image: -ms-linear-gradient(top, #f5f5f5, #f1f1f1);
+    background-image: -o-linear-gradient(top, #f5f5f5, #f1f1f1);
+    background-image: linear-gradient(top, #f5f5f5, #f1f1f1);
+    -o-transition: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
+    cursor: default;
+}
+form button[disabled] {
+    border: none;
+    background: #ccc !important;
+    color: #000000 !important;
+}
+
+form button[type=submit] {
+    display: block;
+    margin-bottom: 10px;
+    padding: 0 8px;
+    height: 44px;
+    font-size: 16px;
+    background: #eee;
+
+    border: 1px solid #3079ed;
+    color: #fff;
+    text-shadow: 0 1px rgba(0, 0, 0, 0.1);
+    background-color: #4d90fe;
+    background-image: -webkit-linear-gradient(top, #4d90fe, #4787ed);
+    background-image: -moz-linear-gradient(top, #4d90fe, #4787ed);
+    background-image: -ms-linear-gradient(top, #4d90fe, #4787ed);
+    background-image: -o-linear-gradient(top, #4d90fe, #4787ed);
+    background-image: linear-gradient(top, #4d90fe, #4787ed);
+
+    text-align: center;
+    font-size: 14px;
+    font-weight: 700;
+    height: 36px;
+    padding: 0 8px;
+    line-height: 36px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+    -o-transition: all 0.218s;
+    -moz-transition: all 0.218s;
+    -webkit-transition: all 0.218s;
+    transition: all 0.218s;
+    -o-transition: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
+    cursor: default;
+}
+
+form.inline button[type=submit] {
+    display: inline-block !important;
+}
+
+select {
+    text-align: center;
+    width: 100%;
+    color: #444;
+    font-size: 14px;
+    font-weight: 700;
+    height: 25px;
+    padding: 0 8px;
+    line-height: 25px;
+    -moz-border-radius: 2px;
+    -webkit-border-radius: 2px;
+    border-radius: 2px;
+    -o-transition: all 0.218s;
+    -moz-transition: all 0.218s;
+    -webkit-transition: all 0.218s;
+    transition: all 0.218s;
+    border: 1px solid #dcdcdc;
+    background-color: #f5f5f5;
+    background-image: -webkit-linear-gradient(top, #f5f5f5, #f1f1f1);
+    background-image: -moz-linear-gradient(top, #f5f5f5, #f1f1f1);
+    background-image: -ms-linear-gradient(top, #f5f5f5, #f1f1f1);
+    background-image: -o-linear-gradient(top, #f5f5f5, #f1f1f1);
+    background-image: linear-gradient(top, #f5f5f5, #f1f1f1);
+    -o-transition: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
+    cursor: default;
+}
+
+form p {
+    color: red;
+    padding: 5px 0;
+}
+
+
+/*form box*/
+  .app-box-form{
+    position : fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1;
+    overflow-y:scroll;
+    padding: 10px 0 30px 0;
+  }
+
+  .app-box-form:after{
+    position: fixed;
+    content: '';
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1;
+    background: #000;
+    opacity: 0.4;
+  }
+
+  
+
+  .app-box-form form{
+    position: relative;
+    /* height: 1300px; */
+    width: 700px;
+    margin: auto;
+    z-index: 99;
+    background: #fff;
+    border: 1px solid #ccc;
+    border-radius:3px;
+    box-shadow:0px 0px 2px #000;
+  }
+
+  /*end form box*/
+
+
+  form{
+  width: 100%;
+}
+
+form[name=searchForm]{
+  display : flex;
+  flex-flow : row nowrap;
+}
+
+    form[name=searchForm] button.tgl {
+        position: absolute;
+    }
+
+form[name=searchForm] select{
+    outline : none;
+  width : 120px;
+}
+
+form[name=searchForm] input{
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    outline : none;
+}
+form[name=searchForm] button{
+  
+  background : #4ea6bc;
+  color : #fff;
+  height: 34px;
+padding: 6px 12px;
+margin-left : -1px;
+    text-shadow: 1px 1px 1px #888;
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+}
+
+    form[name=searchForm] button:hover {
+        box-shadow : none;
+    }
+
+    .app-search-form-foot button {
+        outline : none;
+        background: #4ea6bc;
+        color: #fff;
+        height: 34px;
+        padding: 6px 12px;
+        margin-left: -1px;
+        text-shadow: 1px 1px 1px #888;
+        border-radius: 4px;
+    }
+
+.app-search-form-foot button:hover {
+    box-shadow: none;
+}
+
+
+form.block{
+  width: 100%;
+  display: flex;
+}
+
+form.small{
+  width:  400px;
+}
+
+.form-msg{
+  position: fixed;
+  z-index: 99;
+  top: 5px;
+  left: 0;
+  right: 0;
+  background: red;
+  color: #fff;
+  font-weight: bold;
+  font-size: 16px;
+  margin:auto;
+  width: 500px;
+  text-align: center;
+  height: 50px;
+  line-height: 50px;
+  border-radius: 3px;
+}
+
+.form-head{
+  position: relative;
+  padding: 10px 20px;
+}
+
+.form-head-close{
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    /* height: 32px; */
+    /* width: 32px; */
+    /* font-size: 32px; */
+    z-index: 1;
+  }
+
+.form-main{
+  padding: 10px 20px;
+}
+.form-foot{
+  border-top : 1px solid #ddd;
+  padding: 10px 20px;
+  background: #eee;
+}
+
+form label{
+  display: block;
+  font-weight: bold;
+  margin: 15px 0 5px 0;
+}
+
+input[type=text],
+input[type=password],
+input[type=password]{
+  width: 100%;
+  padding: 7px 10px;
+  border: 2px solid #333;
+}
+
+input[type=button],
+input[type=submit],
+button, .btn{
+  padding: 5px 15px;
+  border: 1px solid transparent;
+  border-radius: 2px;
+  cursor: default;
+  font-size: 11px;
+  font-weight: bold;
+  text-align: center;
+  white-space: nowrap;
+  margin-right: 2px;
+  height: 27px;
+  line-height: 27px;
+  min-width: 54px;
+  outline: 0;
+  padding: 0 8px;
+}
+
+input[type=button]:hover,
+input[type=submit]:hover,
+button:hover, .btn:hover{
+  box-shadow: 1px 1px 1px #000;
+}
+
+select{
+  padding: 7px 10px;
+  border: 2px solid #333;
+}
+
+input[type=radio]{}
+input[type=checkbox]{}
+
+
+
+/*angular input validations*/
+/*select.ng-invalid ,input.ng-invalid {
+  border: 2px solid red;
+}
+input.ng-valid {
+  border: 2px solid #333;
+}*/

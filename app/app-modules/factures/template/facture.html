@@ -1,0 +1,57 @@
+﻿<style>
+    @media print{
+        img {
+            width: 50px;
+            height: 50px;
+        }
+
+        * {
+            font-family: 'Segoe UI';
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        table, th, td {
+            border: 1px solid #ddd;
+            padding: 7px;
+            text-align: left;
+        }
+
+        td.date {
+            width: 150px;
+        }
+
+        td.total {
+            font-weight: bold;
+        }
+
+        th {
+            height: 30px;
+        }
+    }
+</style>
+<div class="app-facture">
+    <img src="/app/assets/img/logo__.png" />
+    <h1>Liste des factures</h1>
+    <table>
+        <tr>
+            <th>N°</th>
+            <th>Net à payé</th>
+            <th>Unité</th>
+            <th>Date</th>
+        </tr>
+        <tr ng-repeat="f in this.factures">
+            <td>{{f.numeroFacture}}</td>
+            <td>{{f.netAPayer | currency : 'F.CFA'}}</td>
+            <td>{{f.laboratoireLib}}</td>
+            <td class="date">{{f.insertDate | amDateFormat:'Do MMMM YYYY'}}</td>
+        </tr>
+        <tr>
+            <td colspan="2" class="total">TOTAL</td>
+            <td colspan="2" class="total">{{this.total | currency : 'F.CFA'}}</td>
+        </tr>
+    </table>
+</div>

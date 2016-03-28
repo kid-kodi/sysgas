@@ -1,0 +1,224 @@
+/*
+ * app.shell.css
+ * Shell styles
+*/
+
+.app-head, .app-head-logo, .app-head-acct, .app-head-title,
+.app-head-nav, .app-main, .app-main-nav,
+.app-main-content, .app-foot, .app-chat,
+.app-modal {
+    position: absolute;
+}
+
+.app-head {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 40px;
+    z-index: 2;
+    /* background: #003056; */
+    color: #fff;
+    /* color: #00bcf2; */
+    background-color: #003056;
+    font-weight: 500;
+    /* box-shadow: 0 2px 2px -2px rgba(0, 0, 0, .75); */
+}
+
+.app-head-logo {
+    top: 0;
+    left: 0;
+    height: 40px;
+    line-height: 40px;
+    width: 250px;
+    /* box-shadow: 0 2px 2px -2px rgba(0, 0, 0, .75); */
+}
+
+    .app-head-logo h1 {
+        text-align: left;
+        font-weight: 500;
+        font-size: 20px;
+        /* text-shadow: 0px 0px 1px #000; */
+        padding-left: 15px;
+    }
+
+    .app-head-title {
+    top: 4px;
+    left: 275px;
+    height: 40px;
+    line-height: 40px;
+    display: none;
+}
+
+.app-head-acct {
+    top: 0;
+    right: 0;
+    height: 40px;
+    /* box-shadow: 0 2px 2px -2px rgba(0, 0, 0, .75); */
+}
+
+.app-head-nav {
+    top: 0;
+    left: 128px;
+    height: 40px;
+}
+
+/*.app-head-nav ul{
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 40px;
+}*/
+
+    .app-head-acct ul li {
+        list-style: none;
+        float: left;
+        height: 40px;
+        line-height: 40px;
+        padding: 0 10px 0 10px;
+        /* border-right: 1px solid rgba(128,128,128,.4); */
+        /* border-left: 1px solid rgba(128,128,128,.4); */
+        border-width: 0 0 0 thin;
+        border-style: solid;
+        border-color: rgba(128,128,128,.4);
+        /* border: 1px solid #fff; */
+    }
+
+    .app-head-acct #user-card {
+        /* margin: 0 7px 0 0; */
+        cursor: default;
+    }
+
+    .app-head li:hover {
+        background: #5597b4;
+    }
+
+    #user-card a:hover {
+        text-decoration: none;
+    }
+
+    #user-card-list {
+        display: block;
+        width: 200px;
+        position: absolute;
+        top: 42px;
+        right: 0;
+        background: #fff;
+    }
+
+    .app-head-acct img {
+        width: 25px;
+        border: 1px solid #eee;
+        border-radius: 10px;
+        margin: 0 7px 0 10px;
+        display: inline-block;
+        vertical-align: middle;
+    }
+
+    .app-head-nav ul li {
+        list-style: none;
+        float: left;
+        height: 40px;
+        line-height: 40px;
+        margin-left: 15px;
+        padding: 0 10px 0 10px;
+    }
+
+        .app-head ul li a {
+            position: relative;
+            display: inline-block;
+            height: 40px;
+            font-size: 13px;
+            text-shadow: 1px 1px 1px #000;
+        }
+
+        .app-head ul li a .icon{
+            font-size: 20px;
+        }
+
+        .app-head-nav ul li a:hover {
+            text-decoration: none;
+        }
+
+        .app-head-nav ul li.active {
+            /*border-bottom: 3px solid #aa0000;*/
+            border-bottom: 3px solid #fff;
+        }
+
+        .app-head-nav ul li:hover {
+            /*border-bottom: 3px solid #aa0000;*/
+            border-bottom: 3px solid #fff;
+        }
+
+.app-main {
+    top: 40px;
+    left: 250px;
+    right: 250px;
+    /* bottom: 50px; */
+    /* padding: 0; */
+    /* z-index: 2; */
+    /* border: 1px solid #888; */
+    /* box-shadow: 1px 1px 1px #000; */
+    box-shadow: inset 0 1px 2px 0px rgba(0,0,0,0.5);
+    background: #fff;
+    margin-bottom: 30px;
+}
+
+.app-main-content,
+.app-main-nav {
+    top: 0;
+    bottom: 0;
+}
+
+.app-main-nav {
+    width: 250px;
+    background: #eee;
+}
+
+.app-x-closed .app-main-nav {
+    width: 0;
+}
+
+.app-main-content {
+    left: 250px;
+    right: 0;
+    background: #ddd;
+}
+
+.app-x-closed .app-main-content {
+    left: 0;
+}
+
+.app-foot {
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 40px;
+}
+
+.app-chat {
+    bottom: 0;
+    right: 0;
+    width: 300px;
+    height: 15px;
+    cursor: pointer;
+    background: red;
+    border-radius: 5px 0 0 0;
+    z-index: 1;
+}
+
+    .app-chat:hover {
+        background: #a00;
+    }
+
+.app-modal {
+    margin-top: -200px;
+    margin-left: -200px;
+    top: 50%;
+    left: 50%;
+    width: 400px;
+    height: 400px;
+    background: #fff;
+    border-radius: 3px;
+    z-index: 2;
+}

@@ -1,0 +1,34 @@
+API --- Naming convention
+
+convention de création d'une url (route)
+get    -> /objectName?page=p&limit=l&filter=f     retrouve tous les objets  METHOD TYPE GET. params : page, limit, filter 
+get    -> /objectName?id                          retrouve un objet par id  GET METHOD
+put    -> /objectName?id                          met à jour un objet par id PUT METHOD
+post   -> /objectName                             nouvelle enregistrement
+delete -> /obectName?id                           suppression
+
+
+
+convention de création d'une méthode
+
+getAll [ObjecTname]      ( retrouve tous les objects   )
+get    [ObjecTname] ById ( retrouve les objets par nom )
+update [ObjecTname]      ( mise à jour d'un objet      )
+delete [ObjecTname]      ( suppression d'un objet      )
+create [ObjecTname]      ( création d'un objet         )
+
+ObjecTname peut etre le nom de la table exemple : 
+pour User table 
+getAllUser, 
+getUserById, 
+updateUser, 
+deleteUser, 
+createUser
+
+start api v2 with redbeam's
+creating new directory api/v2
+
+implementation of crud method for table patient.
+
+
+

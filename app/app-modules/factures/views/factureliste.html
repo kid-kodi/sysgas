@@ -1,0 +1,201 @@
+﻿<div class="app-patient">
+
+    <div class="app-patient-bar">
+        <div class="app-patient-bar-title">
+            <h1>Facture</h1>
+        </div>
+        <div class="app-page-action" sticky-nav>
+            <ul>
+                <li class="icons-item">
+                    <a ng-click="vm.printFacture()" title="Imprimer">
+                        <div class="icons-icon mdl2-scan"></div>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" title="Actualiser">
+                        <div class="icons-icon mdl2-refresh"></div>
+                    </a>
+                </li>
+                <li ng-click="vm.toggleSeachForm()">
+                    <div class="icons-icon mdl2-find-legacy"  title="Rechercher"></div>
+                </li>
+            </ul>
+        </div>
+        <div class="app-page-action-paging">
+            <span>de {{vm.of}} à {{vm.to}} / {{vm.TotalCount}}</span>
+            <ul>
+                <li class="icons-item">
+                    <button ng-click="vm.navigateTo('prev')" ng-disabled="vm.of == 1">
+                        <div class="icons-icon mdl2-arrow-HTML-legacy"></div>
+                    </button>
+                </li>
+                <li class="icons-item">
+                    <button ng-click="vm.navigateTo('next')" ng-disabled="vm.to >= vm.TotalCount || vm.TotalCount == 0">
+                        <div class="icons-icon mdl2-arrow-HTML-mirrored-legacy"></div>
+                    </button>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="app-patient-bar-action" ng-show="vm.showSearchForm == true">
+        <form name="searchForm" novalidate>
+            <input class="searchBox" type="text"
+                   ng-model="vm.searchText"
+                   ng-change="vm.searchTextChanged()"
+                   placeholder="Rechercher une facture par nom, prénom, telephone"/>
+            <button ng-click="vm.lookUp()">
+                <span class="icon ion-android-search"></span>
+            </button>
+            <button class="tgl" ng-click="vm.toggleClass()">
+                <span class="icon ion-chevron-down"></span>
+            </button>
+        </form>
+    </div>
+
+
+    <!-- <div class="app-patient-bar">
+        <div class="app-patient-bar-title">
+            <h1>Liste des factures</h1>
+        </div>
+        <div class="app-patient-bar-action">
+            <div class="app-search-bar">
+                <form name="searchForm" novalidate>
+                    <input class="searchBox" type="text"
+                           ng-model="vm.searchText"
+                           ng-change="vm.searchTextChanged()"
+                           placeholder="Rechercher une facture par nom, prénom, telephone"/>
+                    <button ng-click="vm.lookUp()">
+                        <span class="icon ion-android-search"></span>
+                    </button>
+                    <button class="tgl" ng-click="vm.toggleClass()">
+                        <span class="icon ion-chevron-down"></span>
+                    </button>
+                </form>
+                
+            </div>
+            <div class="app-search-form" ng-show="vm.showForm == true">
+                <form name="specForm" novalidate>
+                    <div ng-click="vm.toggleClass()" class="app-search-form-head">
+                        <div class="ion-close"></div>
+                    </div>
+                    <div class="app-search-form-main">
+
+                        <select name="jourNumber"
+                                ng-model="vm.jourNumber"
+                                ng-options="jour.jourNumber as jour.jourNumber for jour in vm.jours">
+                            <option value="">JOUR</option>
+                        </select>
+                        <select name="moisNumber"
+                                ng-model="vm.moisNumber"
+                                ng-options="mois.moisNumber as mois.moisLib for mois in vm.mois">
+                            <option value="">MOIS</option>
+                        </select>
+                        <select name="anneeNumber"
+                                ng-model="vm.anneeNumber"
+                                ng-options="annee.anneeLib as annee.anneeLib for annee in vm.annees">
+                            <option value="">ANNEE</option>
+                        </select>
+
+                        <label>Numéro de facture</label>
+                        <input type="text" name="numerofacture" ng-model="vm.numeroFacture"/>
+                        <label>Choix du laboratoire</label>
+                        <select name="laboratoireId"
+                                ng-model="vm.laboratoireId"
+                                ng-options="labo.id as labo.laboratoireLib for labo in vm.laboratoires">
+                            <option value="">Laboratoire</option>
+                        </select>
+                        <label>Choix de la facturière</label>
+                        <select name="employeeId"
+                                ng-model="vm.employeeId"
+                                ng-options="u.id as u.fullName for u in vm.userCaisse">
+                            <option value="">Facturière</option>
+                        </select>
+                    </div>
+                    <div class="app-search-form-foot">
+                        <button ng-click="vm.lookUp()">
+                            <span class="icon ion-android-search"></span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div> -->
+    <!-- <div class="app-page-action" sticky-nav>
+        <div class="app-page-action-button">
+            <a ng-click="vm.printFacture()">
+                <span class="icon ion-ios7-printer-outline"></span>
+                <span class="text">Imprimer</span>
+            </a>
+        </div>
+        <div class="app-page-action-paging">
+            <span>de {{vm.of}} à {{vm.to}} / {{vm.TotalCount}}</span>
+            <button ng-click="vm.navigateTo('prev')" ng-disabled="vm.of == 1">
+                <span class="icon ion-arrow-left-b"></span>
+            </button>
+            <button ng-click="vm.navigateTo('next')" ng-disabled="vm.to >= vm.TotalCount || vm.TotalCount == 0">
+                <span class="icon ion-arrow-right-b"></span>
+            </button>
+        </div>
+    </div> -->
+
+    <div class="app-patient-main">
+        <div class="tab">
+            <div class="tab-items" ng-init="vm.selectedTab = 1">
+                <div ng-click="vm.onStateChange(1)" class="tab-item" ng-class="{'active':vm.selectedTab === 1}">
+                    <span class="icon ion-document"></span>
+                    <div class="info">
+                        <h3 class="text">
+                            <span>Total Payé </span>
+                        </h3>
+                        <p>{{vm.totalPaye | currency : 'F.CFA'}}</p>
+                    </div>
+                </div>
+                <div ng-repeat="uc in vm.userCaisse" class="tab-item" ng-class="{'active':vm.selectedTab === 2}">
+                    <span class="icon ion-android-social-user"></span>
+                    <div class="info">
+                        <h3 class="text">
+                            <span>{{uc.fullName}} </span>
+                        </h3>
+                        <p>{{uc.montantEncaisse | currency : 'F.CFA'}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-list">
+                <div class="app-patient-main-item"
+                     ng-show="vm.filteredCount == 0">
+                    <h2>Aucune commande enregistré</h2>
+                </div>
+                <div id="clientList" class="app-patient-main-item" ng-show="vm.filteredCount > 0"
+                     ng-repeat="p in vm.filteredFacture">
+                    <!--<item-list patient="p"></item-list>-->
+
+
+                    <div class="item" ng-class="{ active : vm.selectedIndex == p.id }" ng-click="vm.itemClicked(p.id)">
+                        <span class="item-nom">
+                            {{p.patientFullName}}
+                        </span>
+                        <span class="item-nom">
+                            {{p.numeroFacture}}
+                        </span>
+                        <span class="item-telephone">
+                            <span>{{p.netAPayer | currency : 'F.CFA'}}</span>
+                        </span>
+                        <span class="item-birth">{{p.laboratoireLib}}</span>
+                        <span class="item-date">
+                            <span am-time-ago="p.insertDate"></span>
+                            <!--<span>{{p.insertDate | amDurationFormat : 'minute' }}</span>-->
+                        </span>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+    
+    
+    <div id="patientBox"></div>
+    <div class="app-patient-foot"></div>
+</div>

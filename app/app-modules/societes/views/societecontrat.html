@@ -1,0 +1,56 @@
+﻿<div class="app-patient">
+    <div class="app-patient-bar" sticky-nav>
+        <div class="app-patient-bar-title">
+            <h1>{{vm.title}} d'un societe</h1>
+        </div>
+        <div class="app-page-action">
+            <ul>
+                <li>
+                    <a href="#/societe" title="Retour à la liste">
+                        <div class="icons-icon mdl2-arrow-HTML-legacy"></div>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="app-panel">
+        <div class="app-panel-main">
+            <form name="societeForm" novalidate>
+                <div class="aq">
+                    <p>Les champs avec (*) sont requis</p>
+                </div>
+                <div class="aq">
+                    <label>Nom : </label>
+                    <input type="text" name="name" ng-model="vm.societeLib" ng-minlength="3" required ng-focus/>
+                    <div class="errorMessage" ng-show="societeForm.name.$invalid && societeForm.name.$focused">
+                        <small class="error" ng-show="societeForm.name.$error.required">
+                            Ce champs est requis !
+                        </small>
+                        <small class="error" ng-show="societeForm.name.$error.minlength">
+                            Minimum 3 caractères !
+                        </small>
+                    </div>
+                </div>
+                <div class="aq_b" ng-repeat="c in vm.typeContrats">
+                    <span class="checkbox">
+                        <input id="{{c.id}}" type="checkbox" value="{{c.id}}" ng-checked="vm.selection.indexOf(c.id) > -1" ng-click="vm.toggleSelection(c.id)" />
+                    </span>
+                    <span>{{c.typeContratLib}}</span>
+                </div>
+                <div class="aq">
+                    <button type="submit" ng-click="vm.saveSociete()"
+                            ng-disabled="societeForm.$invalid">
+                        {{vm.buttonText}}
+                    </button>
+                </div>
+                <div class="message" ng-show="vm.updateStatus">
+                    <div class="label label-success">
+                        <span class="glyphicon glyphicon-thumbs-up icon-white"></span>
+                        <span>{{ vm.message }}</span>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="app-panel-foot"></div>
+    </div>
+</div>

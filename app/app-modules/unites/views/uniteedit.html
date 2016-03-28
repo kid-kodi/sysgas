@@ -1,0 +1,65 @@
+﻿<div class="app-patient">
+    <div class="app-patient-bar" sticky-nav>
+        <div class="app-patient-bar-title">
+            <h1>{{vm.title}} d'un unité</h1>
+        </div>
+        <div class="app-page-action">
+            <ul>
+                <li>
+                    <a href="#/unite" title="Retour à la liste">
+                        <div class="icons-icon mdl2-arrow-HTML-legacy"></div>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="app-panel">
+        <div class="app-panel-main">
+            <form name="uniteForm" novalidate>
+                <div class="aq">
+                    <p>Les champs avec (*) sont requis</p>
+                </div>
+                <div class="aq">
+                    <label>Choix du departement :</label>
+                    <select name="departementId"
+                            ng-model="vm.unite.departementId"
+                            ng-options="dept.id as dept.departementLib for dept in vm.departements"
+                            ng-change="vm.onDeptChange()"
+                            required ng-focus>
+                        <option value="">Departement</option>
+                    </select>
+                    <div class="errorMessage" ng-show="uniteForm.departementId.$invalid && uniteForm.departementId.$focused">
+                        <small class="error" ng-show="uniteForm.departementId.$error.required">
+                            Ce champs est requis !
+                        </small>
+                    </div>
+                </div>
+                <div class="aq">
+                    <label>Nom : </label>
+                    <input type="text" name="name" ng-model="vm.unite.uniteLib" ng-minlength="3" required ng-focus/>
+                    <div class="errorMessage" ng-show="uniteForm.name.$invalid && uniteForm.name.$focused">
+                        <small class="error" ng-show="uniteForm.name.$error.required">
+                            Ce champs est requis !
+                        </small>
+                        <small class="error" ng-show="uniteForm.name.$error.minlength">
+                            Minimum 3 caractères !
+                        </small>
+                    </div>
+                </div>
+                <div class="aq">
+                    <button type="submit" ng-click="vm.saveUnite()"
+                            ng-disabled="uniteForm.$invalid">
+                        {{vm.buttonText}}
+                    </button>
+                </div>
+                <div class="message" ng-show="vm.updateStatus">
+                    <div class="label label-success">
+                        <span class="glyphicon glyphicon-thumbs-up icon-white"></span>
+                        <span>{{ vm.message }}</span>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="app-panel-foot"></div>
+    </div>
+</div>

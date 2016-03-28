@@ -1,0 +1,250 @@
+﻿.app-cmd {
+    width: 800px;
+    margin: 20px auto;
+    background: #fff;
+    border: 1px solid;
+    border-color: #e5e6e9 #dfe0e4 #d0d1d5;
+    border-radius: 3px;
+}
+
+.app-cmd-bar {
+    background: #f6f7f8;
+    border-bottom: 1px solid #d3d6db;
+    height: 40px;
+    line-height: 40px;
+}
+
+.app-cmd-bar-title,
+.app-cmd-bar-action { height: 40px; }
+
+.app-cmd-bar-title {
+    padding: 0 10px;
+    float: left;
+}
+
+/*.app-cmd-bar-title h1{
+    font-size: 18px;
+}*/
+
+.app-cmd-bar-action {
+    text-align: right;
+    float: right;
+    padding: 0 10px;
+}
+
+.app-cmd-bar-action button {
+    text-align: center;
+    color: #444;
+    font-size: 14px;
+    font-weight: 700;
+    height: 25px;
+    padding: 0 8px;
+    line-height: 25px;
+    -moz-border-radius: 2px;
+    -webkit-border-radius: 2px;
+    border-radius: 2px;
+    -o-transition: all 0.218s;
+    -moz-transition: all 0.218s;
+    -webkit-transition: all 0.218s;
+    transition: all 0.218s;
+    border: 1px solid #dcdcdc;
+    background-color: #f5f5f5;
+    background-image: -webkit-linear-gradient(top, #f5f5f5, #f1f1f1);
+    background-image: -moz-linear-gradient(top, #f5f5f5, #f1f1f1);
+    background-image: -ms-linear-gradient(top, #f5f5f5, #f1f1f1);
+    background-image: -o-linear-gradient(top, #f5f5f5, #f1f1f1);
+    background-image: linear-gradient(top, #f5f5f5, #f1f1f1);
+    -o-transition: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
+    cursor: default;
+}
+
+.app-cmd-main { padding: 0; }
+
+.app-cmd-main-item {
+    width: 100%;
+    font-size: 16px;
+    border-bottom: 1px solid #eee;
+}
+
+.app-cmd-main-item a{
+        display: inline-block;
+    /* vertical-align: top; */
+    padding: 15px 5px;
+    width: 100%;
+    /* height: 40px; */
+    /* line-height: 40px; */
+}
+
+.app-cmd-main-item a:hover{
+    background: #eee;
+    text-decoration: none;
+}
+
+.app-cmd-main-item:last-child { border-bottom: none; }
+
+.app-cmd-main-item .item-nom {
+    display: inline-block;
+    overflow: hidden;
+    width: 35%;
+}
+
+.app-cmd-main-item .item-telephone {
+    display: inline-block;
+    text-align: center;
+    overflow: hidden;
+    width: 25%;
+}
+
+.app-cmd-main-item .item-genre {
+    display: inline-block;
+    overflow: hidden;
+    width: 3%;
+}
+
+.app-cmd-main-item .item-status {
+    display: inline-block;
+    overflow: hidden;
+    width: 3%;
+}
+
+.app-cmd-main-item .item-date {
+    display: inline-block;
+    width: 31%;
+    text-align: right;
+    overflow: hidden;
+}
+
+.app-cmd-foot {
+    border-top: 1px solid #eee;
+    height: 40px;
+    line-height: 40px;
+}
+
+
+.app-cmd-search {
+    width: 100%;
+    border-bottom: 1px solid #eee;
+}
+
+.app-cmd-search form {
+    width: 100%;
+    padding: 5px 10px;
+    margin: 0 !important;
+}
+
+.app-cmd-search form input.searchBox {
+    width: 100%;
+    padding: 5px 10px;
+    border: 1px solid #888;
+}
+
+
+.app-cmd-form {
+    /*position : fixed;
+    top      : 0;
+    left     : 0;
+    bottom   : 0;
+    right    : 0;
+     content: "";
+    background-color : #eee;
+    z-index: 2;*/
+}
+
+.app-cmd-form::after {
+    position : fixed;
+    top      : 0;
+    left     : 0;
+    bottom   : 0;
+    right    : 0;
+     content: "";
+    background-color : #000;
+    z-index: 1;
+    opacity: 0.4;
+}
+
+.app-cmd-form .content {
+        position: fixed;
+    margin-left: -400px;
+    top: 10px;
+    bottom: 0;
+    left: 50%;
+    width: 800px;
+    background: #fff;
+    border-radius: 3px;
+    z-index: 5;
+    border: 1px solid;
+    border-color: #e5e6e9 #dfe0e4 #d0d1d5;
+    border-radius: 3px;
+
+    background-color: #ffffff;
+    -webkit-box-shadow: 0 3px 9px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 3px 9px rgba(0, 0, 0, 0.5);
+    background-clip: padding-box;
+    outline: 0;
+}
+
+.app-cmd-form-head {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 40px;
+    line-height: 40px;
+
+    background: #f6f7f8;
+    border-bottom: 1px solid #d3d6db;
+}
+
+.app-cmd-form-head-title {
+    padding: 0 15px;
+    font-size: 14px;
+    float: left;
+}
+.app-cmd-form-head-action {
+    float: right;
+    padding: 0 15px;
+}
+
+.app-cmd-form-head-action button {
+    text-align: center;
+    color: #444;
+    font-size: 14px;
+    font-weight: 700;
+    height: 25px;
+    padding: 0 8px;
+    line-height: 25px;
+    -moz-border-radius: 2px;
+    -webkit-border-radius: 2px;
+    border-radius: 2px;
+    -o-transition: all 0.218s;
+    -moz-transition: all 0.218s;
+    -webkit-transition: all 0.218s;
+    transition: all 0.218s;
+    border: 1px solid #dcdcdc;
+    background-color: #428bca !important;
+    
+    -o-transition: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
+    cursor: default;
+}
+.app-cmd-form-main {
+    position: absolute;
+    top: 40px;
+    bottom: 0;
+    width: 100%;
+    overflow-y: auto;
+}
+
+/*.app-cmd-form-foot {
+    position: absolute;
+    height: 40px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    border-top: 1px solid #eee;
+}*/
