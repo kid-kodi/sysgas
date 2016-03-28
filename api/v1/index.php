@@ -1264,10 +1264,10 @@ $app->get('/patientCmd', 'authenticate', function() use ($app) {
         $employeeid = (isset($_GET['employeeid']) && $_GET['employeeid'] > 0) ? $_GET['employeeid'] : 0;
 
         $response = array();
-        $db = new DbHandler();
+        $AnalyseRepo = new AnalyseRepo();
 
         // fetching all user tasks
-        $result_commandeAnalyse = $db->getAnalyseDetails($tcontratid, $analyseid, $employeeid);
+        $result_commandeAnalyse = $AnalyseRepo->getAnalyseDetails($tcontratid, $analyseid, $employeeid);
 
         $response["error"] = false;
         $response["commandeAnalyse"] = $result_commandeAnalyse;

@@ -144,6 +144,57 @@ class AnalyseRepo {
         return $num_affected_rows > 0;
     }
 
+
+    /**
+     * Fetching single task
+     * @param String $task_id id of the task
+     */
+    public function getAnalyseDetails($tcontratid, $analyseid, $employeeid) {
+        $stmt = $this->conn->prepare("SELECT
+        analyse.id,
+        analyse.analyseLib,
+        analyse.nbreJourRetrait,
+        analyse.laboratoireId,
+        prixanalyse.forfait,
+        prixanalyse.nbreB,
+        typecontrat.TypeContratId
+        FROM
+        analyse
+        INNER JOIN prixanalyse ON prixanalyse.AnalyseId = analyse.id AND analyse.id = ?
+        INNER JOIN typecontrat ON typecontrat.TypeContratId = prixanalyse.TypeContratId AND typecontrat.TypeContratId = ?");
+        $stmt->bind_param("ii", $analyseid, $tcontratid);
+        if ($stmt->execute()) {
+            $res = array();
+            $stmt->bind_result($AnalyseId, $AnalyseLib, $NbreJourRetrait, $LaboratoireId, $Forfait, $NbreB, $TypeContratId);
+            // TODO
+            // $task = $stmt->get_result()->fetch_assoc();
+            $stmt->fetch();
+            $res["analyseId"]       = $AnalyseId;
+            $res["analyseLib"]      = $AnalyseLib;
+            $res["nbreJourRetrait"] = $NbreJourRetrait;
+            $res["laboratoireId"]   = $LaboratoireId;
+            $res["forfait"]         = $Forfait;
+            $res["nbreB"]           = $NbreB;
+            $res["typeContratId"]   = $TypeContratId;
+            $res["medecinFullName"] = '';
+            $res["tauxReduction"]   = 0;
+            $res["netAPayer"]       = $Forfait;
+            $res["dateRetrait"]     = date("Y-m-d", strtotime("+ ".$NbreJourRetrait." days"));
+
+            $stmt->close();
+
+            if( $employeeid != 0 ){
+                $employee = $this->getEmployeeNameById($employeeid);
+                $res["medecinFullName"] = $employee["fullname"];
+                $res["tauxReduction"] = $employee["taux"];
+                $res["netAPayer"]       = $this->computeNetAPayer($employeeid, $Forfait);
+            }
+            return $res;
+        } else {
+            return NULL;
+        }
+    }
+
     /**
      * Fetching all patient
      * @param $pageSize $pageNumber $searchText
