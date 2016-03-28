@@ -290,6 +290,23 @@ class CommandeRepo {
         return $num_affected_rows > 0;
     }
 
+    /**
+     * Function to assign a task to user
+     * @param String $user_id id of the user
+     * @param String $task_id id of the task
+     */
+    public function createCommandeAnalyse($commande_id, $analyse, $user_id) {
+        $stmt = $this->conn->prepare("INSERT INTO `commandeanalyse` (`AnalyseId`, `NetAPayer`, `MedecinId`, `DateDeRetait`, `CommandeId`, `Forfait`, `TauxReduction`, `NbreB`, InsertENTUserAccountId, UpdateENTUserAccountId) VALUES (?,?,?,?,?,?,?,?,?,?)");
+        $stmt->bind_param("ssssssssss", $analyse['analyseId'], $analyse['netAPayer'], $analyse['medecinId'], $analyse['dateRetrait'], $commande_id, $analyse['forfait'],  $analyse['tauxReduction'], $analyse['nbreB'], $user_id, $user_id);
+        $result = $stmt->execute();
+
+        if (false === $result) {
+            die('execute() failed: ' . htmlspecialchars($stmt->error));
+        }
+        $stmt->close();
+        return $result;
+    }
+
 
     /**
      * Fetching single patient
@@ -515,6 +532,84 @@ class CommandeRepo {
         } else {
             return NULL;
         }
+    }
+
+
+    public function getNextKey( $object ){
+        $key = 0;
+
+        $stmt = $this->conn->prepare("SELECT Id, Entite, NextKey, Year from refprimarykey WHERE Entite = ?");
+        $stmt->bind_param("s", $object);
+        if ($stmt->execute()) {
+            $res = array();
+            $stmt->bind_result($id, $entite, $nextKey, $year);
+            // TODO
+            // $task = $stmt->get_result()->fetch_assoc();
+            $stmt->fetch();
+            $res["id"] = $id;
+            $res["entite"] = $entite;
+            $res["nextKey"] = $nextKey;
+            $res["year"] = $year;
+            $stmt->close();
+
+            $currentYear = date('Y');
+            if( $currentYear > $year ){
+                $key = 1;
+                $year    = $currentYear;
+
+                echo $nextKey;
+            }
+            else{
+                $key = $nextKey + 1;
+            }
+
+            $stmt = $this->conn->prepare("UPDATE refprimarykey SET NextKey=?, Year=? WHERE Id=? AND Entite = ?");
+            $stmt->bind_param("ssss", $key, $year, $id, $entite);
+            $stmt->execute();
+            $num_affected_rows = $stmt->affected_rows;
+            $stmt->close();
+
+
+            return $key;
+        } else {
+            return NULL;
+        }
+
+    }
+
+    /**
+     * Deleting a task
+     * @param String $task_id id of the task to delete
+     */
+    public function deleteCommandeAnalyse( $commande_id ) {
+        $stmt = $this->conn->prepare("DELETE FROM commandeanalyse WHERE (CommandeId=?)");
+        $stmt->bind_param("i", $commande_id);
+        $stmt->execute();
+        $num_affected_rows = $stmt->affected_rows;
+        $stmt->close();
+        return $num_affected_rows > 0;
+    }
+
+    public function GenerateKey($typeObjet, $code ,$nextKey)
+    {
+        $resultat = NULL;
+        $last_two = date("y") ;
+        switch ($typeObjet)
+        {
+            case 'Patient':
+                $resultat = $last_two . 'P' . $nextKey;
+                break;
+            case 'Commande':
+                $resultat = $last_two . 'C' . $nextKey;
+                break;
+            case 'Facture':
+                $resultat = $code . '-' . $last_two . $nextKey;
+                break;
+            default:
+                $resultat = $last_two . $nextKey;
+                break;  
+        }
+        return $resultat;
     }
 
 

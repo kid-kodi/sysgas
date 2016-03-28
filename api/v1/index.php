@@ -989,8 +989,9 @@ $app->post('/patient', 'authenticate', function() use ($app) {
 
             // creating new task
             $patient_id = $db->createPatient( 
-                $nom,            $prenom, $genre,     $jourNaissance, $moisNaissance, 
-            $anneeNaissance, $email,  $telephone, $paysId, $adresse, $typePieceFournitId, $numeroPiece, $user_id, $numeroPatient
+                $nom, $prenom, $genre, $jourNaissance, $moisNaissance, 
+                $anneeNaissance, $email, $telephone, $paysId, $adresse, 
+                $typePieceFournitId, $numeroPiece, $user_id, $numeroPatient
             );
             //echo 'OK';
 
@@ -1299,7 +1300,7 @@ $app->post('/patientCmd', 'authenticate', function() use ($app) {
     $response = array();
 
     global $user_id;
-    $db = new DbHandler();
+    $db = new CommandeRepo();
 
     $typePatientId = $postArray['typePatientId'];
     $societeId = $postArray['societeId'];
@@ -1368,7 +1369,7 @@ $app->put('/patientCmd', 'authenticate', function() use ($app) {
     $response = array();
 
     global $user_id;
-    $db = new DbHandler();
+    $db = new CommandeRepo();
 
     $id = $postArray['id'];
     $typePatientId = $postArray['typePatientId'];
