@@ -1,17 +1,17 @@
 .app-patient {
-    /* position: absolute; */
-    /* top: 0; */
-    /* left: 0; */
-    /* bottom: 0; */
-    /* right: 0; */
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
     /* width: 100%; */
     /* height: 100%; */
     /* margin: 10px auto; */
-    background: #fff;
+    /* background: #fff; */
     /* border: 1px solid; */
     /* border-color: #e5e6e9 #dfe0e4 #d0d1d5; */
-    border-radius: 3px;
-    padding: 0;
+    /* border-radius: 3px; */
+    /* padding: 0; */
 }
 
 .app-search-form{
@@ -42,25 +42,33 @@
 
 .app-page-action{
     order: 1;
-    display : flex;
-    flex-flow: row nowrap;
-    justify-content: flex-start;
-    align-items: center;
+    /* display : flex; */
+    /* flex-flow: row nowrap; */
+    /* justify-content: flex-start; */
+    /* align-items: center; */
+    /* line-height: inherit; */
     /* height: 60px; */
-    padding: 0 10px;
+    /* padding: 0 10px; */
     /* padding: 11px 0; */
 }
-
+.app-page-action ul li:hover {
+	background: #5597b4;
+}
 .app-page-action ul li {
+        display: flex;
         list-style: none;
         float: left;
-        height: 40px;
-        line-height: 40px;
-        padding: 0 10px 0 10px;
+        height: 49px;
+        line-height: 49px;
+        padding: 0 15px 0 15px;
         border-width: 0 0 0 thin;
         border-style: solid;
         border-color: rgba(128,128,128,.4);
         color : #fff;
+        cursor: default;
+    }
+    .app-page-action ul li:last-child {
+    	border-width: 0 thin 0 thin;
     }
 
 .app-page-action-button{
@@ -116,13 +124,16 @@
     flex-grow: 1;
     justify-content: flex-end;
 }
+.app-page-action-paging ul li:hover {
+	background : #4ea6bc;
+}
 
 .app-page-action-paging ul li {
         list-style: none;
         float: left;
-        height: 40px;
-        line-height: 40px;
-        padding: 0 10px 0 10px;
+        height: inherit;
+        line-height: inherit;
+        /* padding: 0 5px 0 5px; */
         border-width: 0 0 0 thin;
         border-style: solid;
         border-color: rgba(128,128,128,.4);
@@ -203,7 +214,7 @@ button[disabled]:hover{box-shadow : none;}
     display: flex;
     flex-flow: row nowrap;
     align-items: center;
-    padding: 0 10px;
+    /* padding: 0 10px; */
 }
 
 .app-patient-bar-title,
@@ -212,7 +223,7 @@ button[disabled]:hover{box-shadow : none;}
 .app-patient-bar-title {
     order: 1;
     /* flex-grow: 2; */
-    padding: 0 20px 0 0;
+    padding: 0 20px 0 10px;
     /* float: left; */
     color: #fff;
     /* width: 75px; */
@@ -274,7 +285,7 @@ button[disabled]:hover{box-shadow : none;}
 
 .app-patient-main-item {
     width: 100%;
-    font-size: 15px;
+    font-size: 13px;
     /* border-bottom: 1px solid #eee; */
     /* margin: 5px 0; */
     /* background: #fff; */
@@ -311,7 +322,7 @@ button[disabled]:hover{box-shadow : none;}
         align-items: center;
         /* text-shadow: 0px 0px 1px #888; */
         color: #000;
-        font-weight: 600;
+        font-weight: 500;
         /* vertical-align: top; */
         padding: 10px 10px;
         width: 100%;
@@ -322,7 +333,7 @@ button[disabled]:hover{box-shadow : none;}
         /* margin: 5px 0; */
         border-width: thin thin thin thin;
         border-style: solid;
-        border-radius: 2px;
+        border-radius: 1px;
         border-color: #e5e6e9 #dfe0e4 #d0d1d5 #d0d1d5;
         margin: -1px 0;
         flex-direction: row;
@@ -748,18 +759,26 @@ ul li p{
   background-color:#fff;
   border-width : thin;
   border-style: solid;
-  border-radius: 2px;
+  /* border-radius: 2px; */
   border-color: #dfe0e4 transparent #d0d1d5 transparent;
   /* width: 100%; */
   margin :auto;
-  top: 40px;
+  top: 50px;
   left: 250px;
-  right: 250px;
-  padding:10px 15px;
+  right: 0;
+  /* padding:10px 15px; */
   position:fixed;
   z-index : 99;
   transition : 0.1s;
-  box-shadow: 0px 1px 1px gray;
+  /* box-shadow: 0px 1px 1px gray; */
+  background: #003c6c;
+  border: 1px solid rgba(128,128,128,.4);
+  /* border-color: rgba(128,128,128,.4); */
+  height: 50px;
+  line-height: 50px;
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
 }
 
 .dash-cont{
@@ -832,4 +851,48 @@ a[title]:hover:after {
 .analyse-form button{
     order: 3;
     margin: 10px;
+}
+
+.app-patient-modal {
+    position: fixed;
+    margin-top: -200px;
+    margin-left: -200px;
+    top: 50%;
+    left: 50%;
+    width: 400px;
+    background: #fff;
+    border-radius: 3px;
+    z-index: 2;
+    border: 1px solid rgba(128,128,128,.4);
+}
+
+.app-patient-modal-title {
+    border-bottom: 1px solid rgba(128,128,128,.4);
+    padding: 5px;
+}
+.app-patient-modal-message {
+    display: flex;
+    align-items: center;
+    min-height: 150px;
+    padding: 5px;
+}
+
+.app-patient-modal-foot{
+
+    border-top: 1px solid rgba(128,128,128,.4);
+}
+.app-patient-modal-foot ul{
+    height: 40px;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+}
+
+.app-patient-modal-foot ul li{
+    list-style: none;
+    width: 60px;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    border-right: 1px solid rgba(128,128,128,.4);
 }

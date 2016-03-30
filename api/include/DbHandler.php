@@ -692,53 +692,7 @@ class DbHandler {
 
     
 
-    /**
-     * Creating new task
-     * @param String $user_id user id to whom task belongs to
-     * @param String $task task text
-     */
-    public function createPatient( 
-            $nom, $prenom, $genre, $jourNaissance, $moisNaissance, 
-            $anneeNaissance, $email,  $telephone, $paysId, $adresse, $typePieceFournitId, $numeroPiece, $user_id, $numeroPatient
-        ) {
-        $stmt = $this->conn->prepare("INSERT INTO patient(Nom, Prenom, Genre, JourNaissance, MoisNaissance, AnneeNaissance, Email, Telephone, PaysId, Adresse, TypePieceFournitId, numeroPiece, InsertENTUserAccountId, UpdateENTUserAccountId, NumeroPatient) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
-        $stmt->bind_param("ssssssssssssiis", $nom, $prenom, $genre, $jourNaissance, $moisNaissance, 
-            $anneeNaissance, $email,  $telephone, $paysId, $adresse, $typePieceFournitId, $numeroPiece, $user_id, $user_id, $numeroPatient);
-        $result = $stmt->execute();
-        $stmt->close();
-
-        //echo 'OK'.$result;
-
-        if ($result) {
-            // task row created
-            // now assign the task to user
-            $new_patient_id = $this->conn->insert_id;
-            //$res = $this->createUserTask($user_id, $new_task_id);
-            return $new_patient_id;
-        } else {
-            // task failed to create
-            return NULL;
-        }
-    }
-
-
-
-    /**
-     * Updating patient
-     * @param String $patient_id id of the task
-     * @param String $task task text
-     * @param String $status task status
-     */
-    public function updatePatient($id, $nom, $prenom, $genre, $jourNaissance, $moisNaissance, 
-            $anneeNaissance, $email,  $telephone, $paysId, $adresse, $typePieceFournitId, $numeroPiece, $user_id) {
-        $stmt = $this->conn->prepare("UPDATE patient set Nom = ?, Prenom = ?, Genre = ?, JourNaissance = ?, MoisNaissance = ?, AnneeNaissance = ?, Email = ?, Telephone = ?, PaysId = ?, Adresse = ?, TypePieceFournitId = ?, numeroPiece = ?, InsertENTUserAccountId = ?, UpdateENTUserAccountId = ? WHERE PatientId = ?");
-        $stmt->bind_param("ssssssssssssiis", $nom, $prenom, $genre, $jourNaissance, $moisNaissance, 
-            $anneeNaissance, $email,  $telephone, $paysId, $adresse, $typePieceFournitId, $numeroPiece, $user_id, $user_id, $id);
-        $stmt->execute();
-        $num_affected_rows = $stmt->affected_rows;
-        $stmt->close();
-        return $num_affected_rows > 0;
-    }
+    
 
 
      /**

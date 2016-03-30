@@ -9,6 +9,7 @@ require_once '../include/app/DepartementRepo.php';
 require_once '../include/app/ConfigRepo.php';
 require_once '../include/app/PatientRepo.php';
 require_once '../include/app/CommandeRepo.php';
+require_once '../include/app/CommandeAnalyseRepo.php';
 require_once '../include/app/FactureRepo.php';
 require_once '../include/app/LaboratoireRepo.php';
 require_once '../include/app/UniteRepo.php';
@@ -905,6 +906,26 @@ $app->get('/patientById', 'authenticate', function() use ($app) {
  * method GET
  * url /tasks          
  */
+$app->get('/analyseByCommandeId', 'authenticate', function() use ($app) {
+        //global $user_id;
+        $commande_id = (isset($_GET['id']) && $_GET['id'] > 0) ? $_GET['id'] : 0;
+
+        $response = array();
+        $response["error"] = false;
+        
+        $CommandeAnalyseRepo = new CommandeAnalyseRepo();
+        // fetching all user tasks
+        $result_analyse = $CommandeAnalyseRepo->getAnalyseByCommandeId($commande_id);
+        $response["analyses"] = $result_analyse;
+
+        echoRespnse(200, $response);
+    });
+
+/**
+ * get patient by id
+ * method GET
+ * url /tasks          
+ */
 $app->get('/getCommandeById', 'authenticate', function() use ($app) {
         //global $user_id;
         $cmd_id = (isset($_GET['id']) && $_GET['id'] > 0) ? $_GET['id'] : 0;
@@ -987,8 +1008,9 @@ $app->post('/patient', 'authenticate', function() use ($app) {
             $nextKey = $db->getNextKey('Patient');
             $numeroPatient = $db->GenerateKey( 'Patient', '' , $nextKey );
 
+            $PatientRepo = new PatientRepo();
             // creating new task
-            $patient_id = $db->createPatient( 
+            $patient_id = $PatientRepo->create( 
                 $nom, $prenom, $genre, $jourNaissance, $moisNaissance, 
                 $anneeNaissance, $email, $telephone, $paysId, $adresse, 
                 $typePieceFournitId, $numeroPiece, $user_id, $numeroPatient
@@ -998,7 +1020,9 @@ $app->post('/patient', 'authenticate', function() use ($app) {
             if ($patient_id != NULL) {
                 $response["error"] = false;
                 $response["message"] = "Patient enregistré!";
-                $response["patient_id"] = $patient_id;
+
+                
+                $response["patient"] = $PatientRepo->getPatientById( $patient_id );
                 echoRespnse(200, $response);
             } else {
                 $response["error"] = true;
@@ -1067,10 +1091,10 @@ $app->put('/patient', 'authenticate', function() use($app) {
             }
 
             global $user_id;
-            $db = new DbHandler();
+            $PatientRepo = new PatientRepo();
 
             // creating new task
-            $result = $db->updatePatient( 
+            $result = $PatientRepo->update( 
                 $id, $nom, $prenom, $genre, $jourNaissance, $moisNaissance, 
             $anneeNaissance, $email,  $telephone, $paysId, $adresse, $typePieceFournitId, $numeroPiece, $user_id
             );
@@ -1294,8 +1318,7 @@ $app->post('/patientCmd', 'authenticate', function() use ($app) {
     // check for required params
     verifyRequiredParams(array(
         'patientId','typePatientId', 'societeId', 'contratId', 'nomMedecin', 'telephoneMedecin', 
-        'serviceMedecinId', 'etablissementSanitaireId', 'ownerId', 'totalNetAPayer',
-        'totalNbreB', 'currentStateId', 'submitterId'), $postArray );
+        'serviceMedecinId', 'etablissementSanitaireId', 'ownerId', 'currentStateId', 'submitterId'), $postArray );
 
     $response = array();
 
@@ -1310,8 +1333,8 @@ $app->post('/patientCmd', 'authenticate', function() use ($app) {
     $serviceMedecinId = $postArray['serviceMedecinId'];
     $etablissementSanitaireId = $postArray['etablissementSanitaireId'];
     $ownerId = $postArray['ownerId'];
-    $totalNetAPayer = $postArray['totalNetAPayer'];
-    $totalNbreB = $postArray['totalNbreB'];
+    $totalNetAPayer = 0;
+    $totalNbreB = 0;
     $patientId = $postArray['patientId'];
     $currentStateId = $postArray['currentStateId'];
     $submitterId = $postArray['submitterId'];
@@ -1325,13 +1348,13 @@ $app->post('/patientCmd', 'authenticate', function() use ($app) {
     $nextKey = $db->getNextKey('Commande');
     $numeroCommande = $db->GenerateKey( 'Commande', '' , $nextKey );
 
-    $analyse_list = $postArray['analyse_list'];
+    //$analyse_list = $postArray['analyse_list'];
 
     
 
     // creating new task
-    $task_id = $db->createCommande($user_id, $patientId, $typePatientId, $societeId, $contratId, $nomMedecin, $telephoneMedecin, $serviceMedecinId, $etablissementSanitaireId, $ownerId, $totalNetAPayer, $totalNbreB, $currentStateId, 
-        $submitterId, $numeroCommande, $numeroAssurance, $analyse_list);
+    $task_id = $db->create($user_id, $patientId, $typePatientId, $societeId, $contratId, $nomMedecin, $telephoneMedecin, $serviceMedecinId, $etablissementSanitaireId, $ownerId, $totalNetAPayer, $totalNbreB, $currentStateId, 
+        $submitterId, $numeroCommande, $numeroAssurance);
 
     if ($task_id != NULL) {
         $response["error"] = false;
@@ -1380,8 +1403,6 @@ $app->put('/patientCmd', 'authenticate', function() use ($app) {
     $serviceMedecinId = $postArray['serviceMedecinId'];
     $etablissementSanitaireId = $postArray['etablissementSanitaireId'];
     $ownerId = $postArray['ownerId'];
-    $totalNetAPayer = $postArray['totalNetAPayer'];
-    $totalNbreB = $postArray['totalNbreB'];
     $patientId = $postArray['patientId'];
     $currentStateId = $postArray['currentStateId'];
     $submitterId = $postArray['submitterId'];
@@ -1393,13 +1414,146 @@ $app->put('/patientCmd', 'authenticate', function() use ($app) {
         $numeroAssurance        = $postArray['numeroAssurance'];
     }
 
-    $analyse_list = $postArray['analyse_list'];
+    //$analyse_list = $postArray['analyse_list'];
 
     
 
     // creating new task
-    $task_id = $db->updateCommande($user_id, $id, $patientId, $typePatientId, $societeId, $contratId, $nomMedecin, $telephoneMedecin, $serviceMedecinId, $etablissementSanitaireId, $ownerId, $totalNetAPayer, $totalNbreB, $currentStateId, 
-        $submitterId, $numeroAssurance, $analyse_list);
+    $task_id = $db->update($user_id, $id, $patientId, $typePatientId, $societeId, $contratId, $nomMedecin, $telephoneMedecin, $serviceMedecinId, $etablissementSanitaireId, $ownerId, $currentStateId, 
+        $submitterId, $numeroAssurance);
+
+    if ($task_id != NULL) {
+        $response["error"] = false;
+        $response["message"] = "Task created successfully";
+        $response["task_id"] = $task_id;
+        echoRespnse(200, $response);
+    } else {
+        $response["error"] = true;
+        $response["message"] = "Failed to create task. Please try again";
+        echoRespnse(200, $response);
+    }           
+});
+
+/**
+ * Creating new task in db
+ * method POST
+ * params - name
+ * url - /tasks/
+ */
+$app->post('/cmdanalyse', 'authenticate', function() use ($app) {
+    global $user_id;
+    // check for required params
+    $postArray = json_decode($app->request()->getBody(), true);
+
+    //print_r($postArray); 
+
+
+    // check for required params
+    verifyRequiredParams(array(
+        'patientId','typePatientId', 'societeId', 'contratId', 'nomMedecin', 'telephoneMedecin', 
+        'serviceMedecinId', 'etablissementSanitaireId', 'ownerId', 'currentStateId', 'submitterId'), $postArray );
+
+    $response = array();
+
+    global $user_id;
+    $db = new CommandeRepo();
+
+    $typePatientId = $postArray['typePatientId'];
+    $societeId = $postArray['societeId'];
+    $contratId = $postArray['contratId'];
+    $nomMedecin = $postArray['nomMedecin'];
+    $telephoneMedecin = $postArray['telephoneMedecin'];
+    $serviceMedecinId = $postArray['serviceMedecinId'];
+    $etablissementSanitaireId = $postArray['etablissementSanitaireId'];
+    $ownerId = $postArray['ownerId'];
+    $totalNetAPayer = 0;
+    $totalNbreB = 0;
+    $patientId = $postArray['patientId'];
+    $currentStateId = $postArray['currentStateId'];
+    $submitterId = $postArray['submitterId'];
+    if (!isset($postArray['numeroAssurance']) || strlen(trim($postArray['numeroAssurance'])) <= 0){
+        $numeroAssurance        = "";
+    }
+    else{
+        $numeroAssurance        = $postArray['numeroAssurance'];
+    }
+
+    $nextKey = $db->getNextKey('Commande');
+    $numeroCommande = $db->GenerateKey( 'Commande', '' , $nextKey );
+
+    //$analyse_list = $postArray['analyse_list'];
+
+    
+
+    // creating new task
+    $task_id = $db->create($user_id, $patientId, $typePatientId, $societeId, $contratId, $nomMedecin, $telephoneMedecin, $serviceMedecinId, $etablissementSanitaireId, $ownerId, $totalNetAPayer, $totalNbreB, $currentStateId, 
+        $submitterId, $numeroCommande, $numeroAssurance);
+
+    if ($task_id != NULL) {
+        $response["error"] = false;
+        $response["message"] = "Task created successfully";
+        $response["task_id"] = $task_id;
+        echoRespnse(200, $response);
+    } else {
+        $response["error"] = true;
+        $response["message"] = "Failed to create task. Please try again";
+        echoRespnse(200, $response);
+    }           
+});
+
+
+/**
+ * Creating new task in db
+ * method POST
+ * params - name
+ * url - /tasks/
+ */
+$app->put('/cmdanalyse', 'authenticate', function() use ($app) {
+    global $user_id;
+    // check for required params
+    $postArray = json_decode($app->request()->getBody(), true);
+
+    //print_r($postArray); 
+
+
+    // check for required params
+    verifyRequiredParams(array(
+        'id', 'patientId','typePatientId', 'societeId', 'contratId', 'nomMedecin', 'telephoneMedecin', 
+        'serviceMedecinId', 'etablissementSanitaireId', 'ownerId', 'totalNetAPayer',
+        'totalNbreB', 'currentStateId', 'submitterId'), $postArray );
+
+    $response = array();
+
+    global $user_id;
+    $db = new CommandeRepo();
+
+    $id = $postArray['id'];
+    $typePatientId = $postArray['typePatientId'];
+    $societeId = $postArray['societeId'];
+    $contratId = $postArray['contratId'];
+    $nomMedecin = $postArray['nomMedecin'];
+    $telephoneMedecin = $postArray['telephoneMedecin'];
+    $serviceMedecinId = $postArray['serviceMedecinId'];
+    $etablissementSanitaireId = $postArray['etablissementSanitaireId'];
+    $ownerId = $postArray['ownerId'];
+    $patientId = $postArray['patientId'];
+    $currentStateId = $postArray['currentStateId'];
+    $submitterId = $postArray['submitterId'];
+
+    if (!isset($postArray['numeroAssurance']) || strlen(trim($postArray['numeroAssurance'])) <= 0){
+        $numeroAssurance        = "";
+    }
+    else{
+        $numeroAssurance        = $postArray['numeroAssurance'];
+    }
+
+    //$analyse_list = $postArray['analyse_list'];
+
+    
+
+    // creating new task
+    $task_id = $db->update($user_id, $id, $patientId, $typePatientId, $societeId, $contratId, $nomMedecin, $telephoneMedecin, $serviceMedecinId, $etablissementSanitaireId, $ownerId, $currentStateId, 
+        $submitterId, $numeroAssurance);
 
     if ($task_id != NULL) {
         $response["error"] = false;
@@ -2161,6 +2315,117 @@ $app->put('/laboratoire', 'authenticate', function() use ($app) {
         $response["message"] = "Erreur de modification!";
     }
     echoRespnse(200, $response);          
+});
+
+/**
+ * get patient by id
+ * method GET
+ * url /tasks          
+ */
+$app->get('/commandeanalyse', 'authenticate', function() use ($app) {
+        //global $user_id;
+        $commandeid = (isset($_GET['id']) && $_GET['id'] > 0) ? $_GET['id'] : 0;
+
+        $response = array();
+        $response["error"] = false;
+
+        $CommandeRepo = new CommandeRepo();
+        $commande = $CommandeRepo->getCommandeById( $commandeid );
+        $response["commande"] = $commande;
+
+        $CommandeAnalyseRepo = new CommandeAnalyseRepo();
+        $commandeanalyse = $CommandeAnalyseRepo->readByCommandeId( $commandeid );
+        $response["commandeanalyses"] = $commandeanalyse;
+
+        echoRespnse(200, $response);
+    });
+
+
+/**
+ * Creating new task in db
+ * method POST
+ * params - name
+ * url - /tasks/
+ */
+$app->post('/commandeanalyse', 'authenticate', function() use ($app) {
+    // check for required params
+    $postArray = json_decode($app->request()->getBody(), true);
+    // check for required params
+    verifyRequiredParams(array(
+        'analyse_id', 'commande_id', 'type_contrat_id', 'employee_id'), $postArray );
+
+    $response = array();
+
+    //print_r($postArray); 
+
+    // reading post params
+    $commande_id = $postArray['commande_id'];
+    $type_contrat_id = $postArray['type_contrat_id'];
+    $employee_id = $postArray['employee_id'];
+    $analyse_id  = $postArray['analyse_id'];
+
+    /*echo  $commande_id . "/";
+    echo  $type_contrat_id;
+    echo  $employee_id;*/
+
+    $analyseRepo = new AnalyseRepo();
+    $analyse = $analyseRepo->getAnalyseDetails($type_contrat_id, $analyse_id, $employee_id);
+
+    global $user_id;
+    $commandeAnalyseRepo = new CommandeAnalyseRepo();
+    $new_id = $commandeAnalyseRepo->create($commande_id, $analyse, $user_id);
+
+
+    if ($new_id != NULL) {
+        $response["error"] = false;
+        $response["message"] = "Analyse enregistré!";
+
+        $CommandeRepo = new CommandeRepo();
+        $commande = $CommandeRepo->getCommandeById( $commande_id );
+        $response["commande"] = $commande;
+
+        $response["commandeanalyse"] = $commandeAnalyseRepo->readOne( $new_id );
+        echoRespnse(200, $response);
+    } else {
+        $response["error"] = true;
+        $response["message"] = "Failed to create task. Please try again";
+        echoRespnse(200, $response);
+    }      
+});
+
+/**
+ * Deleting task. Users can delete only their tasks
+ * method DELETE
+ * url /tasks
+ */
+$app->delete('/commandeanalyse', 'authenticate', function() use($app) {
+    global $user_id;
+    $commandeanalyseid = (isset($_GET['id']) && $_GET['id'] > 0) ? $_GET['id'] : 0;
+
+    $response = array();
+    $commandeAnalyseRepo = new CommandeAnalyseRepo();
+    $commandeanalyse = $commandeAnalyseRepo->readOne( $commandeanalyseid );
+    $response["commandeanalyseId"] = $commandeanalyseid;
+
+    
+
+
+    $result = $commandeAnalyseRepo->delete($commandeanalyseid);
+    if ($result) {
+        // task deleted successfully
+        $response["error"] = false;
+        $response["message"] = "Task deleted succesfully";
+
+        $CommandeRepo = new CommandeRepo();
+        $commande = $CommandeRepo->getCommandeById( $commandeanalyse["commandeId"] );
+        $response["commande"] = $commande;
+
+    } else {
+        // task failed to delete
+        $response["error"] = true;
+        $response["message"] = "Task failed to delete. Please try again!";
+    }
+    echoRespnse(200, $response);
 });
 
 

@@ -2,10 +2,9 @@
 
     var injectParams = ['$window', '$scope', '$location', 'patientService', '$timeout', '$routeParams', 'config_map', 'FlashService'];
 
-    var patientCmdController = function ($window, $scope, $location, patientService, $timeout, $routeParams, config_map, FlashService) {
+    var CommandeAnalyseController = function ($window, $scope, $location, patientService, $timeout, $routeParams, config_map, FlashService) {
         var vm = this;
 
-        var patientId  = ($routeParams.pid) ? parseInt($routeParams.pid) : 0;
         var commandeId = ($routeParams.cid) ? parseInt($routeParams.cid) : 0;
 
         currentCommande = {};
@@ -80,27 +79,27 @@
             }
         }
 
-        vm.saveCommande = function () {
+        vm.save = function () {
             
             vm.sending = true;
             if ($scope.commandeForm.$valid) { // Submit as normal 
 
                 
 
-                //if (vm.commandeAnalyse.length > 0) {
+                if (vm.commandeAnalyse.length > 0) {
 
                     vm.commande.patientId = patientId;
-                    //vm.commande.analyse_list = vm.commandeAnalyse;
+                    vm.commande.analyse_list = vm.commandeAnalyse;
                     vm.commande.currentStateId = 1;
                     vm.commande.submitterId = 1;
 
-                    console.log(vm.commandeAnalyse);
+                    //console.log(vm.commandeAnalyse);
 
                     if (vm.commande.id > 0 && vm.commande.id) {
                         console.log('updating commande....');
                         //patientService.updateCommande(vm.commande);
 
-                        patientService.patient.update_cmd(vm.commande)
+                        patientService.patient.update_analyse_list(vm.commande)
                         .then(function (result) {
                             console.log(result);
                             processResponse(result);
@@ -108,7 +107,7 @@
                     }
                     else {
                         //patientService.patient.save_cmd(vm.commande);
-                        patientService.patient.save_cmd(vm.commande)
+                        patientService.patient.save_analyse_list(vm.commande)
                         .then(function (result) {
                             console.log(result);
                             processResponse(result);
@@ -116,10 +115,10 @@
                     }
 
                     
-                /*else {
                 }
+                else {
                     FlashService.Error("Veuillez choisir au moin une analyse!");
-                }*/
+                }
 
                 
                 vm.sending = false;
@@ -141,15 +140,11 @@
         }
 
         vm.saveCommandeAnalyse = function () {
-            var contrat_id = vm.commande.contratId;
+            
             var employee_id = 0;
-            var type_contrat_id = 0;
+            var type_contrat_id = vm.commande.typeContratId;
+            var commandeId = vm.commande.id;
             var analyse_id = 0;
-            for (var i = 0; i < vm.contrats.length; i++) {
-                if (vm.contrats[i].id === contrat_id) {
-                    type_contrat_id = vm.contrats[i].typeContratId;
-                }
-            }
 
             if (vm.analyse.employeeId != undefined) {
                 employee_id = vm.analyse.employeeId;
@@ -157,10 +152,17 @@
 
             analyse_id = vm.analyse.analyseId;
 
-            console.log(vm.analyse.employeeId);
-            patientService.insertCommandeAnalyse(type_contrat_id, analyse_id, employee_id)
-            .then(function (result) {
-                console.log(result);
+            patientService.insertCommandeAnalyse(commandeId, type_contrat_id, analyse_id, employee_id)
+            .then(function (response) {
+                var error = response.error;
+                if(error){ return false;}
+
+                var commande_analyse = response.commandeanalyse;
+                var commande = response.commande;
+
+                vm.commande = commande;
+                vm.commandeAnalyse.push(commande_analyse);
+                vm.analyse = {};
             });
         };
 
@@ -235,33 +237,43 @@
        
 
         vm.delAnalyseRow = function (commandeAnalyseId) {
-            alert(commandeAnalyseId);
+            //alert(commandeAnalyseId);
+            if(commandeAnalyseId == null){
+                return false;
+            }
 
-            var index = -1;
-            var comArr = eval(vm.commandeAnalyse);
-            for (var i = 0; i < comArr.length; i++) {
-                if (comArr[i].id === commandeAnalyseId) {
-                    index = i;
-                    break;
+            patientService.deleteCommandeAnalyse(commandeAnalyseId)
+            .then(function( response ){
+                console.log( response );
+                var error = response.error;
+                if(error){ return false;}
+
+                var commande = response.commande;
+                vm.commande = commande;
+                vm.analyse = {};
+
+                var index = -1;
+                var comArr = eval(vm.commandeAnalyse);
+                for (var i = 0; i < comArr.length; i++) {
+                    if (comArr[i].id === commandeAnalyseId) {
+                        index = i;
+                        vm.commandeAnalyse.splice(index, 1);
+                        return false;
+                    }
                 }
-            }
-            if (index === -1) {
-                alert("Something gone wrong");
-            }
-            vm.commandeAnalyse.splice(index, 1);
-            vm.nbreAnalyse = vm.commandeAnalyse.length;
-            setMontant();
+                if (index === -1) {
+                    alert("Something gone wrong");
+                }
+                
+
+            });
         };
 
         (function () {
             vm.commande = {};
-            vm.patient = {};
-
-            if (patientId > 0) {
-                patientService.getPatient(patientId);
-            }
 
             if (commandeId > 0) {
+                patientService.getAnalysesByCommandeId(commandeId);
                 vm.title = 'Modifier ';
                 vm.buttonText = 'Modifier';
             } else {
@@ -269,6 +281,13 @@
                 vm.buttonText = 'Enregistrer';
             }
         })();
+
+        $scope.$on('app-set-analyse', function (event, response) {
+            //alert('analyses set');
+            vm.commande = response.commande;
+            vm.commandeAnalyse = response.commandeanalyses;
+            console.log(vm.commandeAnalyse);
+        });
 
         $scope.$on('app-set-patient', function (event, response) {
             console.log('set patient');
@@ -313,8 +332,8 @@
 
     };
 
-    patientCmdController.$inject = injectParams;
+    CommandeAnalyseController.$inject = injectParams;
 
-    angular.module('app').controller('patientCmdController', patientCmdController);
+    angular.module('app').controller('CommandeAnalyseController', CommandeAnalyseController);
 
 })();

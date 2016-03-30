@@ -192,6 +192,25 @@
 
             _leave = function () { };
 
+            save_analyse_list = function (cmd_map) {
+                console.log('# commande to save #');
+                console.log(cmd_map);
+                
+                return $http.post(serviceBase + 'cmdanalyse', cmd_map)
+                    .then(function (results) {
+                        return results;
+                        //$rootScope.$broadcast('app-insert-commande', results);
+                    });
+            };
+
+            update_analyse_list = function (commande) {
+                return $http.put(serviceBase + 'cmdanalyse?id=' + commande.id, commande)
+                    .then(function (results) {
+                        return results;
+                        //$rootScope.$broadcast('app-update-commande', results);
+                    });
+            };
+
             save_cmd = function (cmd_map) {
                 console.log('# commande to save #');
                 console.log(cmd_map);
@@ -280,7 +299,7 @@
                 });
         };
 
-        factory.insertCommandeAnalyse = function (type_contrat_id, analyse_id, employee_id) {
+        /*factory.insertCommandeAnalyse = function (type_contrat_id, analyse_id, employee_id) {
 
             var type_contrat_id = type_contrat_id;
             var analyse_id = analyse_id;
@@ -295,6 +314,27 @@
                     var response = results.data.commandeAnalyse;
                 $rootScope.$broadcast('app-insert-commandeAnalyse', response);
                 return results.data;
+            });
+        };*/
+
+        factory.insertCommandeAnalyse = function (commande_id, type_contrat_id, analyse_id , employee_id) {
+            var commande_analyse = {
+                commande_id : commande_id,
+                type_contrat_id : type_contrat_id,
+                analyse_id : analyse_id,
+                employee_id : employee_id
+            };
+            return $http.post(serviceBase + 'commandeanalyse', commande_analyse).then(function (results) {
+                var response = results.data;
+                //$rootScope.$broadcast('app-insert-patient', response);
+                return response;
+            });
+        };
+
+        factory.deleteCommandeAnalyse = function (id) {
+            return $http.delete(serviceBase + 'commandeanalyse?id=' + id).then(function (results) {
+                var response = results.data;
+                return response;
             });
         };
 
@@ -333,6 +373,15 @@
             return $http.get(serviceBase + 'patientById?id=' + id).then(function (results) {
                 var response = results.data;
                 $rootScope.$broadcast('app-set-patient', response);
+            });
+        };
+
+        factory.getAnalysesByCommandeId = function (id) {
+            //then does not unwrap data so must go through .data property
+            //success unwraps data automatically (no need to call .data property)
+            return $http.get(serviceBase + 'commandeanalyse?id=' + id).then(function (results) {
+                var response = results.data;
+                $rootScope.$broadcast('app-set-analyse', response);
             });
         };
 

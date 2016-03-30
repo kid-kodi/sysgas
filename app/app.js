@@ -82,6 +82,21 @@
                 },
                 secure: true //This route requires an authenticated user
             })
+            .when('/commandeanalyse/:cid', {
+                templateUrl: viewBase + 'patients/views/commande.analyse.html',
+                controller: 'CommandeAnalyseController',
+                controllerAs: 'vm',
+                title: 'Commande d\'un patient',
+                resolve: {
+                    config_map: ['patientService', function (patientService) {
+                        return patientService.getCmdConfig().then(function (result) {
+                            var config_map = result;
+                            return config_map;
+                        });
+                    }]
+                },
+                secure: true //This route requires an authenticated user
+            })
             .when('/patient/:id', {
                 templateUrl: viewBase + 'patients/views/patientdetail.html',
                 controller: 'patientDetailsController',
@@ -422,6 +437,11 @@
 
     run.$inject = ['$rootScope', '$location', '$cookieStore', '$http', 'amMoment'];
     function run($rootScope, $location, $cookieStore, $http, amMoment) {
+
+        angular.element(document).on("click", function(e) {
+            $rootScope.$broadcast("documentClicked", angular.element(e.target));
+        });
+
         amMoment.changeLocale('fr');
         // keep user logged in after page refresh
         $rootScope.globals = $cookieStore.get('globals') || {};

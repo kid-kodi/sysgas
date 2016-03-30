@@ -13,6 +13,7 @@ class AnalyseRepo {
 
     function __construct() {
         require_once '../include/DbConnect.php';
+        require_once 'EmployeeRepo.php';
         // opening db connection
         $db = new DbConnect();
         $this->conn = $db->connect();
@@ -177,6 +178,7 @@ class AnalyseRepo {
             $res["nbreB"]           = $NbreB;
             $res["typeContratId"]   = $TypeContratId;
             $res["medecinFullName"] = '';
+            $res["medecinId"]       = 0;
             $res["tauxReduction"]   = 0;
             $res["netAPayer"]       = $Forfait;
             $res["dateRetrait"]     = date("Y-m-d", strtotime("+ ".$NbreJourRetrait." days"));
@@ -184,12 +186,41 @@ class AnalyseRepo {
             $stmt->close();
 
             if( $employeeid != 0 ){
-                $employee = $this->getEmployeeNameById($employeeid);
+                $EmployeeRepo = new EmployeeRepo();
+                $employee = $EmployeeRepo->getEmployeeNameById($employeeid);
+                $res["medecinId"] = $employeeid;
                 $res["medecinFullName"] = $employee["fullname"];
                 $res["tauxReduction"] = $employee["taux"];
                 $res["netAPayer"]       = $this->computeNetAPayer($employeeid, $Forfait);
             }
             return $res;
+        } else {
+            return NULL;
+        }
+    }
+
+    /**
+     * Fetching single task
+     * @param String $task_id id of the task
+     */
+    public function computeNetAPayer($employeeid, $forfait) {
+        $stmt = $this->conn->prepare("SELECT
+        titre.TauxReduction
+        FROM
+        employee
+        INNER JOIN titre ON titre.TitreId = employee.TitreId
+        WHERE
+        employee.EmployeeId = ?");
+        $stmt->bind_param("i", $employeeid);
+        if ($stmt->execute()) {
+            $res = array();
+            $stmt->bind_result( $taux );
+            // TODO
+            // $task = $stmt->get_result()->fetch_assoc();
+            $stmt->fetch();
+            $netAPayer = $forfait - ( $taux / 100 * $forfait  );
+            $stmt->close();
+            return $netAPayer;
         } else {
             return NULL;
         }

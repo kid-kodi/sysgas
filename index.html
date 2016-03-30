@@ -25,11 +25,13 @@
     <link href="app/app-content/app.widgets.css" rel="stylesheet"/>
     <link href="app/app-content/card.client.css" rel="stylesheet"/>
     <link href="app/app-content/app.form.css" rel="stylesheet"/>
+    <link rel="stylesheet/less" type="text/css" href="app/app-content/app.dropdown.less" />
 
     <!--third party js-->
     <script src="app/app-vendors/taffydb-2.6.2.js"></script>
-    <script src="app/app-vendors/jquery-2.0.2.min.js"></script>
     <script src="app/app-vendors/angular.min.js"></script>
+    <script src="app/app-vendors/less.min.js"></script>
+    <script src="app/app-vendors/jquery.min.js"></script>
     <script src="app/app-vendors/angular-route.min.js"></script>
     <script src="app/app-vendors/angular-cookies.min.js"></script>
     <script src="app/app-vendors/angular-animate.min.js"></script>
@@ -57,6 +59,7 @@
     <script src="app/app-directives/ngFocus.js"></script>
     <script src="app/app-directives/printer.js"></script>
     <script src="app/app-directives/autocomplete.js"></script>
+    <script src="app/app-directives/dropdown/dropdown.js"></script>
 
     <!-- Real user service that uses an api -->
     <script src="app/app-services/user.service.js"></script>
@@ -77,6 +80,7 @@
     <script src="app/app-modules/patients/controllers/patientDetails.Controller.js"></script>
     <script src="app/app-modules/patients/controllers/patientEdit.Controller.js"></script>
     <script src="app/app-modules/patients/controllers/patientListe.Controller.js"></script>
+    <script src="app/app-modules/patients/controllers/commande.analyse.Controller.js"></script>
     <script src="app/app-modules/patients/services/patient.service.js"></script>
     <script src="app/app-modules/patients/filters/patient.filter.js"></script>
 
@@ -169,7 +173,6 @@
                         <div class="icons-icon mdl2-settings"></div>
                         </a>
                     </li>
-                    
                     <li>
                         <a href="#/dashboard">
                             <div class="icons-icon mdl2-globe"></div>
@@ -197,6 +200,16 @@
             </div>
         </div>
         <div class="app-nav" ng-show="vm.currentUser != null">
+            <!-- <div class="app-nav-drop">
+               <dropdown 
+               placeholder="Choix Module" 
+               list="vm.currentUser.userPermissions" 
+               selected="vm.permission" 
+               property="permissionLib"
+               icon="permissionIcon"
+               url="permissionUrl">
+               </dropdown>
+            </div> -->
             <ul menu-highlighter highlight-class-name="active">
                 <li ng-repeat="p in vm.currentUser.userPermissions">
                     <a href="{{p.permissionUrl}}">

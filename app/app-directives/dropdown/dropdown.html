@@ -1,0 +1,16 @@
+<div class="dropdown-container" ng-class="{ show: listVisible }">
+  <div class="dropdown-display" ng-click="show();" ng-class="{ clicked: listVisible }">
+    <i class="icon icons-icon {{icon}}"></i>
+    <span ng-if="!isPlaceholder">{{display}}</span>
+    <span class="placeholder" ng-if="isPlaceholder">{{placeholder}}</span>
+    <i class="icons-icon mdl2-scroll-chevron-down-bold-legacy"></i>
+  </div>
+  <div class="dropdown-list">
+    <div>
+      <div ng-repeat="item in list" ng-click="select(item)" ng-class="{ selected: isSelected(item) }">
+        <span>{{property !== undefined ? item[property] : item}}</span>
+        <i class="icons-icon mdl2-checkbox-composite-legacy"></i>
+      </div>
+    </div>
+  </div>
+</div>

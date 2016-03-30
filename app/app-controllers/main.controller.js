@@ -32,6 +32,15 @@
             vm.pageTitle = data.title;
         });
 
+        $rootScope.$on("item-selected", function(event, data) {
+
+            alert(data.permissionLib) ;
+
+            //vm.currentUser.userPermissions = [];
+        });
+
+        vm.permission = "";
+
     };
 
     mainController.$inject = injectParams;

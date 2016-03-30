@@ -2,7 +2,7 @@
 
     <div class="app-patient-bar" sticky-nav>
         <div class="app-patient-bar-title">
-            <h1>{{vm.title}} une commande</h1>
+            <h1>{{vm.title}} Analyses Liste</h1>
         </div>
         <div class="app-page-action">
             <ul>
@@ -21,7 +21,7 @@
     </div>
     <div class="app-panel">
         <div class="app-panel-main">
-            <form name="commandeForm" ng-submit="vm.saveCommande()" novalidate>
+            <form name="commandeForm" ng-submit="vm.save()" novalidate>
                 <div class="aq">
                     <p>Les champs avec (*) sont requis</p>
                 </div>
@@ -152,9 +152,97 @@
                         </small>
                     </div>
                 </div>
+
+
+            <div class="app-analyse-box">
+                    <div class="app-box-main">
+                        <div class="app-commande-analyse">
+                            <div class="analyse-form" name="analyseForm">
+                                <autocomplete attr-class="textInput"
+                                              click-activation=true
+                                              on-type="vm.searchAnalyse"
+                                              attr-placeholder="Entrer le nom de l'analyse"
+                                              ng-model="vm.analyse.analyseLib"
+                                              data="vm.analyses"
+                                              on-select="vm.setAnalyse()"
+                                              autocomplete-required>
+                                </autocomplete>
+                                <select name="employeeId"
+                                        ng-model="vm.analyse.employeeId"
+                                        ng-options="e.id as e.fullname for e in vm.employees">
+                                    <option value="">Choisir medecin</option>
+                                </select>
+                                <button ng-show="vm.analyse.analyseId >0"
+                                        type="button"
+                                        ng-click="vm.saveCommandeAnalyse()">
+                                    Ajouter
+                                </button>
+                            </div>
+                        </div>
+                        <table class="table table-hover table-striped table-condensed table-bordered ordersTable">
+                            <thead>
+                                <tr>
+                                    <th colspan="2">
+                                        <strong>Total analyse : {{vm.commandeAnalyse.length}}</strong>
+                                    </th>
+                                    <th colspan="2">
+                                        <strong>Total B : {{ vm.commande.totalNbreB }}</strong>
+                                    </th>
+                                    <th colspan="4">
+                                        <strong>Montant Total : {{ vm.commande.totalNetAPayer }}</strong>
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <th data-ng-click="vm.setOrder('product')">Analyse</th>
+                                    <th data-ng-click="vm.setOrder('product')">Forfait</th>
+                                    <th data-ng-click="vm.setOrder('date')">Rédution autorisé par (%)</th>
+                                    <th data-ng-click="vm.setOrder('date')">Net à payé</th>
+                                    <th data-ng-click="vm.setOrder('quantity')">Nbre B</th>
+                                    <th data-ng-click="vm.setOrder('price')">Date de retrait</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr data-ng-hide="commandeAnalyse || vm.commandeAnalyse.length > 0" class="error">
+                                    <td colspan="8">
+                                        <div class="text-center">
+                                            <strong>Pas de donneé</strong>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr data-ng-repeat="commandeAnalyse in vm.commandeAnalyse">
+                                    <td>
+                                        {{ commandeAnalyse.analyseLib }}
+                                    </td>
+                                    <td>
+                                        {{ commandeAnalyse.forfait }}
+                                    </td>
+                                    <td>
+                                        {{ commandeAnalyse.medecinFullName + ' ( ' + commandeAnalyse.tauxReduction +' %)'}}
+                                    </td>
+                                    <td>
+                                        {{ commandeAnalyse.netAPayer }}
+                                    </td>
+                                    <td>
+                                        {{ commandeAnalyse.nbreB }}
+                                    </td>
+                                    <td>
+                                        {{ commandeAnalyse.dateDeRetait | amDateFormat:'dddd, MMMM Do YYYY'}}
+                                    </td>
+                                    <td>
+                                        <button ng-click="vm.delAnalyseRow(commandeAnalyse.id)">
+                                            <span class="ion-android-close"></span>
+                                        </button>
+                                    </td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
                 <div class="aq">
                     <button type="submit"
-                            ng-disabled="vm.sending == true">
+                            ng-disabled="vm.sending == true || vm.nbreAnalyse == 0">
                         {{vm.buttonText}}
                     </button>
                 </div>

@@ -1,8 +1,8 @@
 ﻿(function () {
 
-    var injectParams = ['$scope', '$filter', 'patientService','patient_list'];
+    var injectParams = ['$scope', '$location', '$filter', 'patientService','patient_list'];
 
-    var patientListeController = function ($scope, $filter, patientService, patient_list) {
+    var patientListeController = function ($scope, $location, $filter, patientService, patient_list) {
         var vm = this;
         vm.patients = patient_list.patients;
         vm.TotalCount = patient_list.totalCount;
@@ -23,6 +23,11 @@
         $.connection.hub.start().done(function () {
             console.log('app started');
         });*/
+
+        vm.changeLocation = function( url ){
+            $location.path( url );
+            return false;
+        }
 
 
         filterPatients("");

@@ -21,6 +21,13 @@
 
         vm.submitted = false;
         vm.sending = false;
+
+        vm.isModalVisible = false;
+
+        vm.changeLocation = function( url ){
+            $location.path( url );
+            return false;
+        }
         
 
         vm.savePatient = function () {
@@ -52,6 +59,9 @@
             var error = result.error;
             var message = result.message;
             var patient = result.patient;
+
+            console.log( patient );
+
             vm.message = message;
             if (!error) {
                 vm.patient = {};

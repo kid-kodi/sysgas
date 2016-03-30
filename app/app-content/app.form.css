@@ -519,7 +519,7 @@ button, .btn{
   text-align: center;
   white-space: nowrap;
   margin-right: 2px;
-  /* height: 35px; */
+  height: 35px;
   /* line-height: 27px; */
   /* min-width: 54px; */
   outline: 0;

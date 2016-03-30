@@ -149,6 +149,7 @@ class CommandeRepo {
         commande.PatientId,
         societe.SocieteLib,
         typecontrat.TypeContratLib,
+        typecontrat.TypeContratId,
         commande.OwnerId,
         commande.SubmitterId,
         entwfstate.StateName,
@@ -170,15 +171,16 @@ class CommandeRepo {
         INNER JOIN entwfstate ON entwfstate.ENTWFStateId = commande.CurrentStateId
         INNER JOIN servicemedecin ON servicemedecin.ServiceMedecinId = commande.ServiceMedecinId
         INNER JOIN etablissementsanitaire ON etablissementsanitaire.Id = commande.EtablissementSanitaireId
-        INNER JOIN commandeanalyse ON commandeanalyse.CommandeId = commande.Id AND commande.Id = ?
+        LEFT OUTER JOIN commandeanalyse ON commandeanalyse.CommandeId = commande.Id
         INNER JOIN typepatient ON typepatient.TypePatientId = commande.TypePatientId
+        WHERE
+        commande.Id = ?
         GROUP BY
-        commande.Id
-        ");
+        commande.Id");
         $stmt->bind_param("i", $cmd_id);
         if ($stmt->execute()) {
             $res = array();
-            $stmt->bind_result($id, $patientId, $societeLib, $typeContratId, $ownerId, $submitterId, $stateName, $currentStateId, $nomMedecin, $telephoneMedecin, $serviceMedecinLib, $etabSanitaireLib, $netAPayer, $nbreB, $typePatientLib, $analyseNumber, $insertDate);
+            $stmt->bind_result($id, $patientId, $societeLib, $typeContratLib, $typeContratId, $ownerId, $submitterId, $stateName, $currentStateId, $nomMedecin, $telephoneMedecin, $serviceMedecinLib, $etabSanitaireLib, $netAPayer, $nbreB, $typePatientLib, $analyseNumber, $insertDate);
             // TODO
             // $task = $stmt->get_result()->fetch_assoc();
             $stmt->fetch();
@@ -187,6 +189,7 @@ class CommandeRepo {
             $res["typePatientLib"]    = $typePatientLib;
             $res["societeLib"]        = $societeLib;
             $res["typeContratId"]     = $typeContratId;
+            $res["typeContratLib"]    = $typeContratLib;
             $res["ownerId"]           = $ownerId;
             $res["submitterId"]       = $submitterId;
             $res["currentStateLib"]   = $stateName;
@@ -210,7 +213,7 @@ class CommandeRepo {
 
             $res["ownerNom"]     = $owner["nom"] . ' ' . $owner["prenom"];
             $res["submitterNom"] = $submitter["nom"] . ' ' . $submitter["prenom"];
-            $res["analyse_list"] = $this->getAnalyseByCmdId( $id );
+            //$res["analyse_list"] = $this->getAnalyseByCmdId( $id );
 
 
             
@@ -225,8 +228,8 @@ class CommandeRepo {
      * @param String $user_id user id to whom task belongs to
      * @param String $task task text
      */
-    public function createCommande($user_id, $patientId, $typePatientId, $societeId, $contratId, $nomMedecin, $telephoneMedecin, $serviceMedecinId, $etablissementSanitaireId, $ownerId, $totalNetAPayer, $totalNbreB, $currentStateId, 
-        $submitterId, $numeroCommande, $numeroAssurance, $analyse_list) {
+    public function create($user_id, $patientId, $typePatientId, $societeId, $contratId, $nomMedecin, $telephoneMedecin, $serviceMedecinId, $etablissementSanitaireId, $ownerId, $totalNetAPayer, $totalNbreB, $currentStateId, 
+        $submitterId, $numeroCommande, $numeroAssurance) {
         $stmt = $this->conn->prepare("INSERT INTO `commande` (PatientId, `TypePatientId`, `ContratId`, `NomMedecin`, `TelephoneMedecin`, `ServiceMedecinId`, `SubmitterId`, `OwnerId`, `CurrentStateId`, InsertENTUserAccountId, UpdateENTUserAccountId, EtablissementSanitaireId, NetAPayer, NbreB, NumeroCommande, NumeroAssurance ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
         $stmt->bind_param("ssssssssssssssss", $patientId, $typePatientId, $contratId, $nomMedecin, $telephoneMedecin, 
             $serviceMedecinId, $user_id, $ownerId, $currentStateId, $user_id, $user_id, $etablissementSanitaireId, 
@@ -240,12 +243,12 @@ class CommandeRepo {
             // task row created
             // now assign the task to user
             $new_commande_id = $this->conn->insert_id;
-            foreach ($analyse_list as  $analyse) {
+            /*foreach ($analyse_list as  $analyse) {
                 $res = $this->createCommandeAnalyse($new_commande_id, $analyse, $user_id);
                 if( ! $res ){
                     return NULL;
                 }
-            }
+            }*/
 
             //$res = $this->createUserTask($user_id, $new_task_id);
             return $new_commande_id;
@@ -260,19 +263,19 @@ class CommandeRepo {
      * @param String $user_id user id to whom task belongs to
      * @param String $task task text
      */
-    public function updateCommande($user_id, $id, $patientId, $typePatientId, $societeId, $contratId, $nomMedecin, $telephoneMedecin, $serviceMedecinId, $etablissementSanitaireId, $ownerId, $totalNetAPayer, $totalNbreB, $currentStateId, 
-        $submitterId, $numeroAssurance, $analyse_list) {
+    public function update($user_id, $id, $patientId, $typePatientId, $societeId, $contratId, $nomMedecin, $telephoneMedecin, $serviceMedecinId, $etablissementSanitaireId, $ownerId, $currentStateId, 
+        $submitterId, $numeroAssurance) {
 
-        $stmt = $this->conn->prepare("UPDATE commande set PatientId = ?, TypePatientId = ?, ContratId = ?, NomMedecin = ?, TelephoneMedecin = ?, ServiceMedecinId = ?, SubmitterId = ?, OwnerId = ?, CurrentStateId = ?, InsertENTUserAccountId = ?, UpdateENTUserAccountId = ?, EtablissementSanitaireId = ?, NetAPayer = ?, NbreB = ?, NumeroAssurance = ? WHERE Id = ?");
-        $stmt->bind_param("ssssssssssssssss", $patientId, $typePatientId, $contratId, $nomMedecin, $telephoneMedecin, 
+        $stmt = $this->conn->prepare("UPDATE commande set PatientId = ?, TypePatientId = ?, ContratId = ?, NomMedecin = ?, TelephoneMedecin = ?, ServiceMedecinId = ?, SubmitterId = ?, OwnerId = ?, CurrentStateId = ?, InsertENTUserAccountId = ?, UpdateENTUserAccountId = ?, EtablissementSanitaireId = ?, NumeroAssurance = ? WHERE Id = ?");
+        $stmt->bind_param("ssssssssssssss", $patientId, $typePatientId, $contratId, $nomMedecin, $telephoneMedecin, 
             $serviceMedecinId, $user_id, $ownerId, $currentStateId, $user_id, $user_id, $etablissementSanitaireId, 
-            $totalNetAPayer, $totalNbreB, $numeroAssurance, $id);
+            $numeroAssurance, $id);
         $stmt->execute();
         $num_affected_rows = $stmt->affected_rows;
         $stmt->close();
 
 
-        if($num_affected_rows > 0){
+        /*if($num_affected_rows > 0){
 
             $commande_id = $id;
             $is_deleted = $this->deleteCommandeAnalyse( $commande_id );
@@ -285,7 +288,7 @@ class CommandeRepo {
                     }
                 }
             }
-        }
+        }*/
 
         return $num_affected_rows > 0;
     }
@@ -357,12 +360,14 @@ class CommandeRepo {
         INNER JOIN typecontrat AS tc ON tc.TypeContratId = c.TypeContratId
         LEFT OUTER JOIN typehopital AS th ON th.TypeHopitalId = commande.TypeHopitalId
         INNER JOIN entwfstate AS ews ON ews.ENTWFStateId = commande.CurrentStateId
-        INNER JOIN commandeanalyse AS ca ON ca.CommandeId = commande.Id
+        LEFT OUTER JOIN commandeanalyse AS ca ON ca.CommandeId = commande.Id
         INNER JOIN patient AS p ON p.PatientId = commande.PatientId
         WHERE
-        commande.PatientId = ?
+                commande.PatientId = ?
         GROUP BY
-        commande.Id
+                commande.Id
+        ORDER BY
+                commande.Id DESC
         ");
         $stmt->bind_param("i", $patient_id);
         $stmt->execute();

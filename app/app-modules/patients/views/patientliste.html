@@ -1,33 +1,36 @@
 ﻿<div class="app-patient">
-    <div class="app-patient-bar">
+    <div class="app-patient-bar" sticky-nav>
         <div class="app-patient-bar-title">
             <h1>Patient</h1>
         </div>
-        <div class="app-page-action" sticky-nav>
+        <div class="app-page-action">
             <ul>
-                <li class="icons-item">
-                    <a href="#/patientedit/0" title="Ajouter">
-                        <div class="icons-icon mdl2-add"></div>
-                    </a>
+                <li ng-click="vm.changeLocation('patientedit/0')">
+                    <!-- <a href="#/patientedit/0"> -->
+                        <span class="mdl2-add"></span>
+                        <span>Nouveau</span>
+                    <!-- </a> -->
                 </li>
-                <li>
-                    <a href="#" title="Actualiser">
-                        <div class="icons-icon mdl2-refresh"></div>
+                <li ng-click="vm.lookUp()">
+                    <span class="mdl2-refresh"></span>
+                    <span>Actualiser</span>
+                </li>
+                <li ng-show="vm.selectedIndex > 0">
+                    <a href="#/patientedit/{{vm.selectedIndex}}">
+                        <span class="mdl2-edit"></span>
+                        <span>Modifier</span>
                     </a>
                 </li>
                 <li ng-show="vm.selectedIndex > 0">
-                    <a href="#/patientedit/{{vm.selectedIndex}}" title="Modifier">
-                        <div class="icons-icon mdl2-edit"></div>
-                    </a>
-                </li>
-                <li ng-show="vm.selectedIndex > 0">
-                    <a href="#/patient/{{vm.selectedIndex}}" title="Voir commandes">
-                        <div class="icons-icon mdl2-view"></div>
+                    <a href="#/patient/{{vm.selectedIndex}}">
+                        <span class="mdl2-view"></span>
+                        <span>Détails patient</span>
                     </a>
                 </li>
                 <li ng-show="vm.selectedIndex > 0">
                     <a href="#/patientcmd/{{vm.selectedIndex}}/0" title="Ajouter commande">
-                        <div class="icons-icon mdl2-new-folder"></div>
+                        <span class="mdl2-new-folder"></span>
+                        <span>Nouvelle commande</span>
                     </a>
                 </li>
                 <li ng-click="vm.toggleSeachForm()">
@@ -91,6 +94,27 @@
 
         </div>
     </div>
-    <div id="patientBox"></div>
+    <div class="app-patient-modal" ng-show="vm.isModalVisible == true">
+        <div class="app-patient-modal-title">
+            <h1>Message</h1>
+        </div>
+        <div class="app-patient-modal-message">
+            <p>Voulez-vous enregistrer une commande pour ce patient ?</p>
+        </div>
+        <div class="app-patient-modal-foot">
+            <ul>
+                <li>
+                    <a href="#/patientcmd/{{vm.patient.id}}">
+                        <div class="mdl2-like-legacy"></div>
+                    </a>
+                </li>
+                <li>
+                    <a href="#/patient">
+                        <div class="mdl2-cancel"></div>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
     <div class="app-patient-foot"></div>
 </div>
